@@ -8,6 +8,7 @@ import {
   PhoneCall,
 } from "lucide-react";
 import { siteData } from "../data/siteData";
+import logoImg from "../assets/logo.png";
 
 const navItems = [
   { label: "Home", to: "/", icon: House },
@@ -24,7 +25,7 @@ function Navbar() {
         <div className="section-shell flex items-center justify-between py-3 sm:py-3.5">
           <NavLink to="/" className="flex items-center gap-2.5 sm:gap-3 group">
             <img
-              src="/logo.png"
+              src={logoImg}
               alt="SR IT Solutions Logo"
               className="h-9 w-9 sm:h-10 sm:w-10 object-contain group-hover:scale-105 transition"
             />

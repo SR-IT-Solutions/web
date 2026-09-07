@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { MapPin, MessageCircle, Phone } from "lucide-react";
 import { siteData } from "../data/siteData";
+import logoImg from "../assets/logo.png";
 
 function Footer() {
   return (
@@ -9,7 +10,7 @@ function Footer() {
         <div>
           <div className="mb-4 flex items-center gap-3">
             <img
-              src="/logo.png"
+              src={logoImg}
               alt="SR IT Solutions Logo"
               className="h-10 w-10 object-contain"
             />
