@@ -8,7 +8,7 @@ import {
   PhoneCall,
 } from "lucide-react";
 import { siteData } from "../data/siteData";
-import logoImg from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 
 const navItems = [
   { label: "Home", to: "/", icon: House },
