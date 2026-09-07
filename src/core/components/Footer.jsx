@@ -8,9 +8,11 @@ function Footer() {
       <div className="section-shell grid gap-8 py-8 sm:py-10 md:grid-cols-3 lg:gap-12">
         <div>
           <div className="mb-4 flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-brand-600 to-rose-500 text-sm font-black text-white shadow-md shadow-brand-500/20">
-              SR
-            </div>
+            <img
+              src="/logo.png"
+              alt="SR IT Solutions Logo"
+              className="h-10 w-10 object-contain"
+            />
             <div>
               <div className="text-lg font-extrabold tracking-tight text-slate-900">
                 SR IT Solutions
@@ -32,22 +34,34 @@ function Footer() {
           </h3>
           <ul className="space-y-2.5 text-sm text-slate-600">
             <li>
-              <Link to="/services" className="hover:text-brand-600 transition inline-block py-0.5">
+              <Link
+                to="/services"
+                className="hover:text-brand-600 transition inline-block py-0.5"
+              >
                 Services & Repairs
               </Link>
             </li>
             <li>
-              <Link to="/catalog" className="hover:text-brand-600 transition inline-block py-0.5">
+              <Link
+                to="/catalog"
+                className="hover:text-brand-600 transition inline-block py-0.5"
+              >
                 Product Catalog
               </Link>
             </li>
             <li>
-              <Link to="/about" className="hover:text-brand-600 transition inline-block py-0.5">
+              <Link
+                to="/about"
+                className="hover:text-brand-600 transition inline-block py-0.5"
+              >
                 About Us
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-brand-600 transition inline-block py-0.5">
+              <Link
+                to="/contact"
+                className="hover:text-brand-600 transition inline-block py-0.5"
+              >
                 Contact & Store Location
               </Link>
             </li>
@@ -65,7 +79,9 @@ function Footer() {
                 href={siteData.brand.phoneHref}
               >
                 <Phone size={16} className="text-brand-600 shrink-0" />
-                <span className="font-medium text-slate-800">{siteData.brand.phone}</span>
+                <span className="font-medium text-slate-800">
+                  {siteData.brand.phone}
+                </span>
               </a>
             </li>
             <li>
@@ -75,7 +91,10 @@ function Footer() {
                 target="_blank"
                 rel="noreferrer"
               >
-                <MessageCircle size={16} className="text-emerald-600 shrink-0" />
+                <MessageCircle
+                  size={16}
+                  className="text-emerald-600 shrink-0"
+                />
                 <span>Chat on WhatsApp</span>
               </a>
             </li>
@@ -87,7 +106,9 @@ function Footer() {
                 rel="noreferrer"
               >
                 <MapPin size={16} className="mt-1 shrink-0 text-brand-600" />
-                <span className="leading-relaxed">{siteData.brand.address}</span>
+                <span className="leading-relaxed">
+                  {siteData.brand.address}
+                </span>
               </a>
             </li>
           </ul>

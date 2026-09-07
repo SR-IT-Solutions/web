@@ -12,7 +12,8 @@ function ContactPage() {
           Looking for the right computer setup? Let’s talk.
         </h1>
         <p className="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-slate-600 max-w-xl mx-auto">
-          Visit our store in Arekere, give us a phone call, or send us a quick message on WhatsApp.
+          Visit our store in Arekere, give us a phone call, or send us a quick
+          message on WhatsApp.
         </p>
       </div>
 
@@ -77,7 +78,10 @@ function ContactPage() {
             </div>
 
             <div className="pt-2 text-xs sm:text-sm text-slate-500 font-medium">
-              Store Hours: <span className="font-semibold text-slate-800">{siteData.brand.hours}</span>
+              Store Hours:{" "}
+              <span className="font-semibold text-slate-800">
+                {siteData.brand.hours}
+              </span>
             </div>
           </div>
 
@@ -96,7 +100,11 @@ function ContactPage() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            window.open(siteData.brand.whatsappHref, "_blank", "noopener,noreferrer");
+            window.open(
+              siteData.brand.whatsappHref,
+              "_blank",
+              "noopener,noreferrer",
+            );
           }}
           className="rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-8 shadow-xs"
         >

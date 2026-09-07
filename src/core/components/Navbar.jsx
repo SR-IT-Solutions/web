@@ -23,9 +23,11 @@ function Navbar() {
       <header className="sticky top-0 z-40 border-b border-slate-200/90 bg-white/90 backdrop-blur-xl shadow-xs">
         <div className="section-shell flex items-center justify-between py-3 sm:py-3.5">
           <NavLink to="/" className="flex items-center gap-2.5 sm:gap-3 group">
-            <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-linear-to-br from-brand-600 to-rose-500 text-sm font-black text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition">
-              SR
-            </div>
+            <img
+              src="/logo.png"
+              alt="SR IT Solutions Logo"
+              className="h-9 w-9 sm:h-10 sm:w-10 object-contain group-hover:scale-105 transition"
+            />
             <div>
               <div className="text-base sm:text-lg font-extrabold tracking-tight text-slate-900 leading-none">
                 SR IT Solutions
