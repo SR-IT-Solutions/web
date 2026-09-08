@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { MapPin, MessageCircle, Phone } from "lucide-react";
 import { siteData } from "../data/siteData";
-import logo from "../../assets/logo.png";
+import logoImg from "/logo.png?url";
 
 function Footer() {
   return (
