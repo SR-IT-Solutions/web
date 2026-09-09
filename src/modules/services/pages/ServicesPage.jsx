@@ -1,56 +1,58 @@
-import { Laptop, Monitor, Printer, Wrench } from "lucide-react";
+import { siteData } from "../../../core/data/siteData";
+import { MessageCircle } from "lucide-react";
 
 const serviceCards = [
   {
-    icon: Laptop,
-    title: "Laptop & Desktop Sales",
-    text: "New, used, and refurbished laptops and desktops for home, office, and everyday use.",
+    title: "Laptops and desktops",
+    text: "New, used, and refurbished machines for home, office, and everyday work. Each one is tested before it goes on the shelf.",
   },
   {
-    icon: Monitor,
-    title: "Computer Accessories",
-    text: "Monitors, keyboards, mice, printers, CCTV equipment, and other computer essentials.",
+    title: "Accessories and peripherals",
+    text: "Monitors, keyboards, mice, printers, CCTV equipment, and the parts that finish a setup.",
   },
   {
-    icon: Wrench,
-    title: "Computer Repair",
-    text: "Practical repair and troubleshooting support for laptops, desktops, and related equipment.",
+    title: "Repairs and diagnostics",
+    text: "Troubleshooting and repair for laptops, desktops, and related equipment. Bring it in and we'll tell you what's wrong.",
   },
   {
-    icon: Printer,
-    title: "Business Equipment",
-    text: "Reliable printers, workstations, and equipment for shops, offices, and local businesses.",
+    title: "Business equipment",
+    text: "Printers, workstations, and hardware for shops, offices, and local businesses.",
   },
 ];
 
 function ServicesPage() {
   return (
-    <div className="section-shell py-10 sm:py-14 lg:py-18">
-      <div className="mb-10 sm:mb-12 text-center max-w-3xl mx-auto">
-        <p className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-brand-600">
-          Services
-        </p>
-        <h1 className="fluid-page-title mt-2 sm:mt-3 font-black text-slate-900">
-          Computers, accessories, and repair support for everyday needs.
-        </h1>
-        <p className="mt-4 text-sm sm:text-base leading-relaxed text-slate-600 max-w-2xl mx-auto">
-          From hardware upgrades and repair diagnostics to complete workplace workstation setups, we provide end-to-end IT hardware support.
-        </p>
+    <div className="section-shell py-12 sm:py-16">
+      <h1 className="t-display text-ink">Services</h1>
+      <p className="t-body measure mt-4">
+        Hardware, upgrades, and repair support from a store in{" "}
+        {siteData.brand.location}.
+      </p>
+
+      <div className="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2">
+        {serviceCards.map(({ title, text }) => (
+          <article key={title} className="border-t border-line pt-5">
+            <h2 className="t-card text-ink">{title}</h2>
+            <p className="t-body measure mt-2 text-[0.9375rem]">{text}</p>
+          </article>
+        ))}
       </div>
 
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4 pt-8 sm:pt-12 border-t border-slate-200/80">
-        {serviceCards.map(({ icon: Icon, title, text }) => (
-          <div
-            key={title}
-            className="group"
-          >
-            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-50 text-brand-600 group-hover:scale-105 group-hover:bg-brand-100 transition">
-              <Icon size={22} />
-            </div>
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900">{title}</h2>
-            <p className="mt-2 text-sm leading-relaxed text-slate-600">{text}</p>
-          </div>
-        ))}
+      <div className="mt-14 border-t border-line pt-8">
+        <h2 className="t-section text-ink">Need something specific?</h2>
+        <p className="t-body measure mt-3">
+          Tell us the budget and what the machine is for, and we&rsquo;ll say
+          what we have that fits.
+        </p>
+        <a
+          href={siteData.brand.whatsappHref}
+          target="_blank"
+          rel="noreferrer"
+          className="btn-ok mt-5"
+        >
+          <MessageCircle size={17} />
+          Message us on WhatsApp
+        </a>
       </div>
     </div>
   );

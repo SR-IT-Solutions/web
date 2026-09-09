@@ -1,123 +1,140 @@
 import { Link } from "react-router-dom";
-import { MapPin, MessageCircle, Phone } from "lucide-react";
+import { MapPin, MessageCircle, Phone, Tag } from "lucide-react";
+import { SiFacebook, SiInstagram } from "react-icons/si";
 import { siteData } from "../data/siteData";
-import logoImg from "/logo.png?url";
+import logoImg from "../../assets/logo.png";
+
+const quickLinks = [
+  { to: "/catalog", label: "Product catalog" },
+  { to: "/services", label: "Services & repairs" },
+  { to: "/about", label: "About us" },
+  { to: "/contact", label: "Contact & store location" },
+];
+
+const channels = [
+  {
+    href: siteData.brand.instagramHref,
+    label: "Instagram",
+    icon: SiInstagram,
+  },
+  {
+    href: siteData.brand.facebookHref,
+    label: "Facebook Marketplace",
+    icon: SiFacebook,
+  },
+  { href: siteData.brand.olxHref, label: "OLX", icon: Tag },
+];
 
 function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-white/90">
-      <div className="section-shell grid gap-8 py-8 sm:py-10 md:grid-cols-3 lg:gap-12">
+    <footer className="mt-16 border-t border-line bg-surface">
+      <div className="section-shell grid gap-10 py-12 md:grid-cols-[1.3fr_0.8fr_1.1fr]">
         <div>
           <div className="mb-4 flex items-center gap-3">
             <img
               src={logoImg}
-              alt="SR IT Solutions Logo"
-              className="h-10 w-10 object-contain"
+              alt=""
+              width="44"
+              height="44"
+              className="h-11 w-11 shrink-0 object-contain"
             />
-            <div>
-              <div className="text-lg font-extrabold tracking-tight text-slate-900">
+            <span className="leading-none">
+              <span className="block font-display text-base font-bold tracking-tight text-ink">
                 SR IT Solutions
-              </div>
-              <div className="text-[10px] uppercase font-semibold tracking-[0.2em] text-slate-500">
-                Computer Store
-              </div>
-            </div>
+              </span>
+              <span className="mt-1 block text-[11px] text-slate">
+                Arekere, Bengaluru
+              </span>
+            </span>
           </div>
-          <p className="max-w-sm text-sm leading-relaxed text-slate-600">
+          <p className="t-body measure">
             Refurbished and used laptops, desktops, accessories, and computer
-            repair services in Arekere, Bengaluru.
+            repair services.
           </p>
+          <p className="t-micro mt-4">GST {siteData.brand.gstNo}</p>
         </div>
 
         <div>
-          <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-slate-900">
-            Quick Links
-          </h3>
-          <ul className="space-y-2.5 text-sm text-slate-600">
-            <li>
-              <Link
-                to="/services"
-                className="hover:text-brand-600 transition inline-block py-0.5"
-              >
-                Services & Repairs
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/catalog"
-                className="hover:text-brand-600 transition inline-block py-0.5"
-              >
-                Product Catalog
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/about"
-                className="hover:text-brand-600 transition inline-block py-0.5"
-              >
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/contact"
-                className="hover:text-brand-600 transition inline-block py-0.5"
-              >
-                Contact & Store Location
-              </Link>
-            </li>
+          <h2 className="font-display text-[15px] font-semibold text-ink">
+            Browse
+          </h2>
+          <ul className="mt-4 space-y-2.5">
+            {quickLinks.map((link) => (
+              <li key={link.to}>
+                <Link
+                  to={link.to}
+                  className="text-[15px] text-slate transition hover:text-signal-600"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div>
-          <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-slate-900">
-            Contact
-          </h3>
-          <ul className="space-y-3 text-sm text-slate-600">
+          <h2 className="font-display text-[15px] font-semibold text-ink">
+            Visit or get in touch
+          </h2>
+          <ul className="mt-4 space-y-3">
             <li>
               <a
-                className="flex items-center gap-2.5 hover:text-brand-600 transition"
+                className="flex items-center gap-2.5 text-[15px] text-slate transition hover:text-signal-600"
                 href={siteData.brand.phoneHref}
               >
-                <Phone size={16} className="text-brand-600 shrink-0" />
-                <span className="font-medium text-slate-800">
+                <Phone size={16} className="shrink-0 text-signal-600" />
+                <span className="font-medium text-ink">
                   {siteData.brand.phone}
                 </span>
               </a>
             </li>
             <li>
               <a
-                className="flex items-center gap-2.5 hover:text-brand-600 transition"
+                className="flex items-center gap-2.5 text-[15px] text-slate transition hover:text-signal-600"
                 href={siteData.brand.whatsappHref}
                 target="_blank"
                 rel="noreferrer"
               >
-                <MessageCircle
-                  size={16}
-                  className="text-emerald-600 shrink-0"
-                />
+                <MessageCircle size={16} className="shrink-0 text-ok" />
                 <span>Chat on WhatsApp</span>
               </a>
             </li>
             <li>
               <a
-                className="flex items-start gap-2.5 hover:text-brand-600 transition"
+                className="flex items-start gap-2.5 text-[15px] leading-relaxed text-slate transition hover:text-signal-600"
                 href={siteData.brand.mapsHref}
                 target="_blank"
                 rel="noreferrer"
               >
-                <MapPin size={16} className="mt-1 shrink-0 text-brand-600" />
-                <span className="leading-relaxed">
-                  {siteData.brand.address}
-                </span>
+                <MapPin size={16} className="mt-1 shrink-0 text-signal-600" />
+                <span>{siteData.brand.address}</span>
               </a>
             </li>
+          </ul>
+
+          <h2 className="mt-7 font-display text-[15px] font-semibold text-ink">
+            Also selling on
+          </h2>
+          <ul className="mt-3 flex flex-wrap gap-2">
+            {channels.map(({ href, label, icon: Icon }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="chip chip-quiet transition hover:border-signal-200 hover:text-signal-600"
+                >
+                  <Icon size={13} className="shrink-0" />
+                  {label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       </div>
 
-      <div className="border-t border-slate-200/80 py-5 pb-20 md:pb-5 text-center text-xs sm:text-sm text-slate-500">
-        © {new Date().getFullYear()} SR IT Solutions. All rights reserved.
+      <div className="border-t border-line-soft py-5 pb-24 text-center text-[13px] text-slate md:pb-5">
+        © {new Date().getFullYear()} SR IT Solutions
       </div>
     </footer>
   );

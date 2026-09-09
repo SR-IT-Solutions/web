@@ -1,292 +1,198 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  ArrowLeft,
-  Check,
-  Cpu,
-  Gauge,
-  MemoryStick,
-  MessageCircle,
-  ShieldCheck,
-} from "lucide-react";
-import { fetchCatalogFromGoogleSheet } from "../../../core/api/googleSheets";
+import { ArrowLeft, MessageCircle } from "lucide-react";
+import { useCatalog } from "../useCatelog";
 import { siteData } from "../../../core/data/siteData";
 
-const defaultOptions = {
-  ram: ["8 GB", "16 GB", "32 GB", "64 GB"],
-  storage: ["256 GB SSD", "512 GB SSD", "1 TB SSD", "2 TB SSD"],
-  processor: ["Intel i5", "Intel i7", "AMD Ryzen 5", "AMD Ryzen 7"],
-  condition: ["New", "Refurbished", "Used"],
-};
+const CONDITIONS = ["New", "Refurbished", "Used"];
 
-const getProductDetails = (item) => ({
-  id: item.id,
-  title: item.title,
-  category: item.category,
-  summary: item.summary,
-  tag: item.tag,
-  price: item.price,
-  image: item.image,
-  description:
-    item.summary ||
-    "Built for performance, reliability, and everyday productivity.",
-  highlights: [
-    "Quality checked before dispatch",
-    "Business-ready configuration",
-    "Support available on request",
-  ],
-  specs: [
-    { label: "Performance", value: "Business ready" },
-    { label: "Warranty", value: "Available" },
-    { label: "Delivery", value: "Fast support" },
-  ],
-  customization: {
-    ram: defaultOptions.ram,
-    storage: defaultOptions.storage,
-    processor: defaultOptions.processor,
-    condition: defaultOptions.condition,
-  },
-});
+const CONFIG_LABELS = {
+  processor: "Processor",
+  ram: "Memory",
+  storage: "Storage",
+  condition: "Condition",
+};
 
 function ProductDetailPage() {
   const { productId } = useParams();
-  const [catalog, setCatalog] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedConfig, setSelectedConfig] = useState({
-    ram: "16 GB",
-    storage: "512 GB SSD",
-    processor: "Intel i5",
-    condition: "New",
+  const { catalog, loading, error } = useCatalog();
+
+  const [activeImage, setActiveImage] = useState(0);
+  const [config, setConfig] = useState({
+    processor: "",
+    ram: "",
+    storage: "",
+    condition: "",
   });
 
-  useEffect(() => {
-    const loadCatalog = async () => {
-      setLoading(true);
-      const data = await fetchCatalogFromGoogleSheet();
-      setCatalog(data);
-      setLoading(false);
-    };
-
-    loadCatalog();
-  }, []);
-
   const product = catalog.find((item) => item.id === productId) ?? null;
+
+  // Only offer options the shop actually recorded for this product.
+  const options = {
+    processor: product?.supportedProcessors ?? [],
+    ram: product?.supportedRams ?? [],
+    storage: product?.supportedStorage ?? [],
+    condition: CONDITIONS,
+  };
+
+  // Keyed on the id, not the product object: `catalog.find()` returns a new
+  // reference every render, which would re-fire this effect forever.
+  useEffect(() => {
+    const match = catalog.find((item) => item.id === productId);
+    if (!match) return;
+    setActiveImage(0);
+    setConfig({
+      processor: match.supportedProcessors?.[0] ?? "",
+      ram: match.supportedRams?.[0] ?? "",
+      storage: match.supportedStorage?.[0] ?? "",
+      condition: CONDITIONS[0],
+    });
+  }, [productId, catalog]);
 
   if (loading) {
     return (
       <div className="section-shell py-16">
-        <div className="h-96 animate-pulse rounded-2xl sm:rounded-3xl border border-slate-200 bg-white p-8" />
+        <div className="card h-96 animate-pulse bg-line-soft" />
       </div>
     );
   }
 
-  if (!product) {
+  if (error || !product) {
     return (
-      <div className="section-shell py-16">
-        <div className="rounded-2xl sm:rounded-3xl border border-dashed border-slate-300 bg-white p-10 text-center">
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Product not found</h1>
-          <p className="mt-2 text-sm text-slate-600">
-            The selected product is not available right now.
-          </p>
-          <Link
-            to="/catalog"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-500"
-          >
-            <ArrowLeft size={16} />
-            Back to catalog
-          </Link>
-        </div>
+      <div className="section-shell py-20 text-center">
+        <h1 className="t-section text-ink">Product not found</h1>
+        <p className="t-body mx-auto mt-3 max-w-md">
+          It may have been sold or removed from the catalog.
+        </p>
+        <Link to="/catalog" className="btn-primary mt-6">
+          <ArrowLeft size={16} />
+          Back to catalog
+        </Link>
       </div>
     );
   }
 
-  const details = getProductDetails(product);
-  const formatPrice = (basePrice) => {
-    if (!basePrice || basePrice === "Custom quote") {
-      return "Custom quote";
-    }
+  const images = product.images?.length
+    ? product.images
+    : product.image
+      ? [product.image]
+      : [];
 
-    return `${basePrice} + upgrades`;
-  };
+  const enquiry = [
+    `Hello SR IT Solutions, I'd like to enquire about ${product.title}.`,
+    config.processor && `Processor: ${config.processor}`,
+    config.ram && `Memory: ${config.ram}`,
+    config.storage && `Storage: ${config.storage}`,
+    config.condition && `Condition: ${config.condition}`,
+    `Listed price: ${product.price}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
 
-  const productEnquiryMessage = [
-    "Hello SR IT SOLUTIONS, I would like to enquire about:",
-    `Device: ${details.title}`,
-    `Category: ${details.category}`,
-    `Processor: ${selectedConfig.processor}`,
-    `RAM: ${selectedConfig.ram}`,
-    `Storage: ${selectedConfig.storage}`,
-    `Condition: ${selectedConfig.condition}`,
-    `Listed price: ${details.price}`,
-  ].join("\n");
-  const productEnquiryHref = `${siteData.brand.whatsappHref.split("?")[0]}?text=${encodeURIComponent(productEnquiryMessage)}`;
+  const enquiryHref = `${siteData.brand.whatsappHref.split("?")[0]}?text=${encodeURIComponent(enquiry)}`;
 
   return (
-    <div className="section-shell py-8 sm:py-12 lg:py-16">
+    <div className="section-shell py-10 sm:py-14">
       <Link
         to="/catalog"
-        className="mb-6 inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-600 transition hover:text-brand-700"
+        className="inline-flex items-center gap-1.5 text-[15px] font-medium text-signal-600 transition hover:text-signal-700"
       >
         <ArrowLeft size={16} />
-        Back to catalog
+        Catalog
       </Link>
 
-      <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] items-start">
-        <div className="overflow-hidden rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white shadow-xs">
-          <div className="relative h-64 sm:h-80 md:h-96 overflow-hidden bg-slate-100">
-            {details.image && (
+      <div className="mt-6 grid items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+        <div>
+          <div className="card aspect-[4/3] overflow-hidden bg-paper">
+            {images[activeImage] && (
               <img
-                src={details.image}
-                alt={details.title}
+                src={images[activeImage]}
+                alt={product.title}
                 className="h-full w-full object-cover"
               />
             )}
-            <div className="absolute inset-0 bg-linear-to-t from-slate-950/40 via-transparent to-transparent" />
-            <div className="absolute inset-x-4 top-4 flex items-start justify-between gap-2">
-              <span className="rounded-full bg-slate-900/85 backdrop-blur-xs px-3 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.16em] text-white shadow-xs">
-                {details.category}
-              </span>
-              <span className="rounded-full bg-brand-600 px-3 py-1 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.16em] text-white shadow-xs">
-                {details.tag}
-              </span>
-            </div>
           </div>
 
-          <div className="p-5 sm:p-8">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 leading-tight">
-              {details.title}
-            </h1>
-            <p className="mt-3 sm:mt-4 text-sm sm:text-base leading-relaxed text-slate-600">
-              {details.description}
-            </p>
-
-            <div className="mt-6 sm:mt-8 grid grid-cols-3 divide-x divide-slate-200/80 py-4 border-y border-slate-200/80">
-              {details.specs.map((spec) => (
-                <div
-                  key={spec.label}
-                  className="px-2 sm:px-4 first:pl-0 last:pr-0 text-center sm:text-left"
+          {images.length > 1 && (
+            <div className="hide-scrollbar mt-3 flex gap-2.5 overflow-x-auto">
+              {images.map((src, index) => (
+                <button
+                  key={src}
+                  type="button"
+                  onClick={() => setActiveImage(index)}
+                  className={`h-16 w-16 shrink-0 overflow-hidden rounded-[8px] border-2 transition sm:h-20 sm:w-20 ${
+                    index === activeImage
+                      ? "border-signal-600"
+                      : "border-line opacity-70 hover:opacity-100"
+                  }`}
+                  aria-label={`Image ${index + 1} of ${images.length}`}
+                  aria-pressed={index === activeImage}
                 >
-                  <div className="text-[10px] sm:text-xs uppercase font-bold tracking-[0.14em] text-slate-500">
-                    {spec.label}
-                  </div>
-                  <div className="mt-1 text-xs sm:text-sm md:text-base font-bold text-slate-900">
-                    {spec.value}
-                  </div>
-                </div>
+                  <img src={src} alt="" className="h-full w-full object-cover" loading="lazy" />
+                </button>
               ))}
             </div>
-
-            <div className="mt-8 sm:mt-10">
-              <h2 className="text-lg sm:text-xl font-bold text-slate-900">
-                Why customers choose this
-              </h2>
-              <ul className="mt-4 space-y-3">
-                {details.highlights.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-center gap-3 text-sm sm:text-base text-slate-700 font-medium"
-                  >
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-700">
-                      <Check size={13} strokeWidth={2.5} />
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          )}
         </div>
 
-        <aside className="lg:sticky lg:top-24 rounded-2xl sm:rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-sm">
-          <div className="flex items-center justify-between gap-4 border-b border-slate-100 pb-5">
-            <div>
-              <p className="text-xs uppercase font-semibold tracking-[0.2em] text-slate-500">
-                Starting from
-              </p>
-              <div className="mt-1 text-2xl sm:text-3xl font-black text-brand-600">
-                {formatPrice(details.price)}
-              </div>
-            </div>
-            <div className="rounded-2xl bg-brand-50 p-2.5 sm:p-3 text-brand-600">
-              <ShieldCheck size={22} />
-            </div>
+        <div>
+          <p className="t-micro">{product.category}</p>
+          <h1 className="t-section mt-1.5 text-ink">{product.title}</h1>
+
+          <div className="mt-4 flex items-center gap-3">
+            <span className="price !text-[1.5rem]">{product.price}</span>
+            {product.tag && (
+              <span className="chip chip-condition">{product.tag}</span>
+            )}
           </div>
 
-          <div className="mt-6 space-y-5">
-            {Object.entries(details.customization).map(([key, options]) => (
-              <div key={key}>
-                <div className="mb-2.5 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-slate-600">
-                  {key === "ram" && <MemoryStick size={14} className="text-brand-600" />}
-                  {key === "storage" && <Gauge size={14} className="text-brand-600" />}
-                  {key === "processor" && <Cpu size={14} className="text-brand-600" />}
-                  {key === "condition" && <ShieldCheck size={14} className="text-brand-600" />}
-                  {key}
+          <p className="t-body measure mt-5">{product.summary}</p>
+
+          <div className="mt-8 space-y-6 border-t border-line pt-6">
+            {Object.entries(options).map(([key, values]) => {
+              if (!values.length) return null;
+              return (
+                <div key={key}>
+                  <p className="t-micro text-ink">{CONFIG_LABELS[key]}</p>
+                  <div className="mt-2.5 flex flex-wrap gap-2">
+                    {values.map((value) => (
+                      <button
+                        key={value}
+                        type="button"
+                        onClick={() =>
+                          setConfig((current) => ({ ...current, [key]: value }))
+                        }
+                        className={`chip min-h-9 px-3.5 transition ${
+                          config[key] === value
+                            ? "border border-signal-600 bg-signal-50 text-signal-700"
+                            : "chip-quiet hover:border-slate-light"
+                        }`}
+                        aria-pressed={config[key] === value}
+                      >
+                        {value}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {options.map((option) => (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() =>
-                        setSelectedConfig((current) => ({
-                          ...current,
-                          [key]: option,
-                        }))
-                      }
-                      className={`rounded-xl border px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-medium transition ${
-                        selectedConfig[key] === option
-                          ? "border-brand-600 bg-brand-50 text-brand-700 font-semibold shadow-xs"
-                          : "border-slate-200 bg-white text-slate-700 hover:border-slate-300 hover:bg-slate-50"
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          <div className="mt-6 rounded-xl sm:rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 space-y-2.5 text-xs sm:text-sm text-slate-600">
-            <div className="flex items-center justify-between">
-              <span>Selected configuration:</span>
-              <span className="font-bold text-slate-900">
-                {selectedConfig.ram} / {selectedConfig.storage}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Processor:</span>
-              <span className="font-bold text-slate-900">
-                {selectedConfig.processor}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span>Condition:</span>
-              <span className="font-bold text-slate-900">
-                {selectedConfig.condition}
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-6 flex flex-col gap-3">
-            <button
-              type="button"
-              onClick={() =>
-                window.open(productEnquiryHref, "_blank", "noopener,noreferrer")
-              }
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-emerald-600 hover:bg-emerald-700 px-5 py-3 sm:py-3.5 text-sm sm:text-base font-semibold text-white shadow-sm transition hover:scale-[1.01]"
+          <div className="mt-8 border-t border-line pt-6">
+            <a
+              href={enquiryHref}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-ok w-full sm:w-auto"
             >
-              <MessageCircle size={18} />
-              Enquire on WhatsApp
-            </button>
-            <Link
-              to="/contact"
-              className="rounded-full border border-slate-300 bg-white hover:bg-slate-50 px-5 py-3 sm:py-3.5 text-center text-sm sm:text-base font-semibold text-slate-700 transition"
-            >
-              Request custom quote
-            </Link>
+              <MessageCircle size={17} />
+              Ask about this on WhatsApp
+            </a>
+            <p className="t-micro mt-3">
+              Your selected configuration is included in the message.
+            </p>
           </div>
-        </aside>
+        </div>
       </div>
     </div>
   );
