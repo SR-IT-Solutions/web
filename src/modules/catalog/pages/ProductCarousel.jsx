@@ -29,7 +29,7 @@ function ProductCarousel() {
           Currently in stock
         </h2>
 
-        <div className="flex items-center gap-2">
+        <div className={`flex items-center gap-2 ${products.length > 3 ? "" : "sm:[&>button]:hidden"}`}>
           <Link
             to="/catalog"
             className="hidden text-[15px] font-medium text-signal-600 transition hover:text-signal-700 sm:inline-flex sm:items-center sm:gap-1.5"
@@ -58,7 +58,11 @@ function ProductCarousel() {
 
       <div
         ref={carouselRef}
-        className="hide-scrollbar mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2"
+        className={`mt-8 pb-2 ${
+          products.length > 3
+            ? "hide-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto"
+            : "grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        }`}
       >
         {loading
           ? Array.from({ length: 4 }).map((_, index) => (
@@ -68,10 +72,15 @@ function ProductCarousel() {
                 aria-hidden="true"
               />
             ))
-          : products.map((product) => (
+          : products.map((product, index) => (
               <div
                 key={product.id}
-                className="flex w-[78vw] shrink-0 snap-start flex-col sm:w-[260px] lg:w-[calc((100%-3rem)/4)]"
+                className={`reveal flex flex-col ${
+                  products.length > 3
+                    ? "w-[78vw] shrink-0 snap-start sm:w-[280px] lg:w-[calc((100%-3.75rem)/4)]"
+                    : ""
+                }`}
+                style={{ "--i": index }}
               >
                 <CatalogCard item={product} viewMode="grid" />
               </div>

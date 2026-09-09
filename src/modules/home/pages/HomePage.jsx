@@ -1,12 +1,14 @@
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { siteData } from "../../../core/data/siteData";
+import { useReveal } from "../../../core/hooks/useReveal";
 import { useCatalog } from "../../catalog/useCatelog";
 import FaqSection from "../components/FaqSection";
 import ProductCarousel from "../../catalog/pages/ProductCarousel";
 
 function HomePage() {
   const { catalog } = useCatalog();
+  const revealRef = useReveal();
 
   // Real counts from the live catalog — no invented figures.
   const categories = [...new Set(catalog.map((item) => item.category))]
@@ -20,20 +22,25 @@ function HomePage() {
   const lead = catalog.find((item) => item.image) ?? null;
 
   return (
-    <div>
-      <section className="border-b border-line bg-surface">
-        <div className="section-shell grid items-center gap-12 py-14 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
+    <div ref={revealRef}>
+      <section className="hero-wash relative overflow-hidden border-b border-line">
+        <div className="section-shell relative grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
           <div>
-            <h1 className="t-display text-ink">
+            <p className="reveal t-micro" style={{ "--i": 0 }}>
+              <span className="inline-flex items-center gap-2">
+                <span className="pulse-dot" aria-hidden="true" />
+                Open in {siteData.brand.location}
+              </span>
+            </p>
+            <h1 className="reveal t-display mt-4 text-ink" style={{ "--i": 1 }}>
               Computers that are checked, priced fairly, and ready to work.
             </h1>
-            <p className="t-body measure mt-5">
-              {siteData.brand.tagline}. Walk in to our store in{" "}
-              {siteData.brand.location}, or message us and we&rsquo;ll tell you
-              what&rsquo;s in stock today.
+            <p className="reveal t-body measure mt-5" style={{ "--i": 2 }}>
+              {siteData.brand.tagline}. Walk in to our store, or message us and
+              we&rsquo;ll tell you what&rsquo;s in stock today.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="reveal mt-8 flex flex-wrap gap-3" style={{ "--i": 3 }}>
               <Link to="/catalog" className="btn-primary">
                 Browse the catalog
                 <ArrowRight size={17} />
@@ -50,7 +57,7 @@ function HomePage() {
             </div>
 
             {categories.length > 0 && (
-              <div className="mt-10 border-t border-line pt-6">
+              <div className="reveal mt-10 border-t border-line pt-6" style={{ "--i": 4 }}>
                 <p className="t-micro">In the catalog right now</p>
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {categories.map((category) => (
@@ -73,12 +80,16 @@ function HomePage() {
 
           {/* A real product, not a fabricated dashboard. */}
           {lead && (
-            <Link to={`/catalog/${lead.id}`} className="card-interactive block overflow-hidden">
-              <div className="aspect-[4/3] overflow-hidden bg-paper">
+            <Link
+              to={`/catalog/${lead.id}`}
+              className="card-interactive reveal block overflow-hidden"
+              style={{ "--i": 2 }}
+            >
+              <div className="sheen aspect-[4/3] overflow-hidden bg-paper">
                 <img
                   src={lead.image}
                   alt=""
-                  className="h-full w-full object-cover"
+                  className="zoom h-full w-full object-cover"
                 />
               </div>
               <div className="flex items-end justify-between gap-4 p-5">
@@ -96,13 +107,13 @@ function HomePage() {
       <ProductCarousel />
 
       <section className="section-shell py-12 sm:py-16">
-        <div className="rule-heading">
+        <div className="rule-heading" data-reveal>
           <h2 className="t-section text-ink">What we sell and service</h2>
         </div>
 
         <div className="mt-8 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
-          {siteData.services.map((service) => (
-            <article key={service.title}>
+          {siteData.services.map((service, index) => (
+            <article key={service.title} data-reveal style={{ "--i": index }}>
               <h3 className="t-card text-ink">{service.title}</h3>
               <p className="t-body mt-2 text-[0.9375rem]">
                 {service.description}
@@ -114,14 +125,19 @@ function HomePage() {
 
       <section className="border-y border-line bg-surface">
         <div className="section-shell py-12 sm:py-16">
-          <div className="rule-heading border-transparent pt-0">
+          <div className="rule-heading border-transparent pt-0" data-reveal>
             <h2 className="t-section text-ink">How buying from us works</h2>
           </div>
 
           {/* Genuinely a sequence, so it is numbered. */}
           <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {siteData.process.map((step, index) => (
-              <li key={step} className="border-t border-line pt-4">
+              <li
+                key={step}
+                data-reveal
+                style={{ "--i": index }}
+                className="border-t border-line pt-4"
+              >
                 <span className="t-micro tabular-nums text-slate-light">
                   Step {index + 1}
                 </span>

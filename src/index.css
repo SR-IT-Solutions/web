@@ -2,42 +2,55 @@
 
 /* ============================================================
    SR IT Solutions — a computer shop, not a SaaS dashboard.
-   Palette is taken from the shop's own logo: the deep laurel red of
-   the "SR" mark, its olive green for availability, on chassis grey.
-   Deliberately not Tailwind's stock rose — this red is darker and
-   browner, so it sits with the mark instead of fighting it.
+   Light theme only.
+
+   The logo's crimson "SR" drives the accent, warmed and brightened so
+   it reads as confident rather than municipal. Amber carries price and
+   condition; the laurel green carries availability and WhatsApp. The
+   ground is a warm off-white rather than a blue-grey, so the whole page
+   sits closer to the red without going pink.
    ============================================================ */
 @theme {
-  /* Ink / neutrals */
-  --color-ink: #12161c;
-  --color-ink-soft: #2a313b;
-  --color-slate: #5a6472;
-  --color-slate-light: #8b939f;
-  --color-line: #dfe3e8;
-  --color-line-soft: #ebeef1;
-  --color-paper: #f7f8f9;
+  /* Ink / neutrals — very slightly warm, to sit with the red */
+  --color-ink: #17131a;
+  --color-ink-soft: #322b36;
+  --color-slate: #6b6270;
+  --color-slate-light: #9a929e;
+  --color-line: #e7e1e4;
+  --color-line-soft: #f1ecee;
+  --color-paper: #faf8f7;
   --color-surface: #ffffff;
 
-  /* Primary accent — the logo's laurel red */
-  --color-signal-50: #fbf1f0;
-  --color-signal-100: #f6dedb;
-  --color-signal-200: #e9bab4;
-  --color-signal-500: #a81e19;
-  --color-signal-600: #8f1712;
-  --color-signal-700: #71100d;
-  --color-signal-900: #430907;
+  /* Primary accent — the logo's crimson, warmed and brightened */
+  --color-signal-50: #fdf2f2;
+  --color-signal-100: #fbe0df;
+  --color-signal-200: #f5bdba;
+  --color-signal-300: #ec918c;
+  --color-signal-500: #cc2c26;
+  --color-signal-600: #b41f1a;
+  --color-signal-700: #8f1714;
+  --color-signal-900: #5a0e0c;
 
-  /* Rationed to price + condition. Never decoration. */
-  --color-tag: #8a4b0f;
-  --color-tag-soft: #fdf4e9;
-  --color-tag-line: #eeddc4;
+  /* Price + condition only. Never decoration. */
+  --color-tag: #a55b06;
+  --color-tag-soft: #fff8ec;
+  --color-tag-line: #f4e0bd;
 
   /* Availability / WhatsApp — the laurel green from the mark */
-  --color-ok: #4a7c22;
-  --color-ok-soft: #f0f5e9;
+  --color-ok: #4c7c2b;
+  --color-ok-soft: #f2f7ec;
 
-  /* One radius token, plus pills. */
-  --radius-card: 10px;
+  /* Warm wash behind the hero. */
+  --grad-warm: linear-gradient(160deg, #fff6f4 0%, #fdfaf8 46%, #faf8f7 100%);
+
+  /* Radius scale — cards are notably rounder now. */
+  --radius-card: 16px;
+  --radius-sm: 10px;
+
+  /* Elevation, used sparingly and always paired with a hairline. */
+  --shadow-sm: 0 1px 2px rgba(18, 22, 28, 0.04);
+  --shadow-md: 0 4px 12px -2px rgba(18, 22, 28, 0.08), 0 12px 32px -12px rgba(18, 22, 28, 0.16);
+  --shadow-lg: 0 8px 24px -4px rgba(18, 22, 28, 0.10), 0 24px 56px -20px rgba(18, 22, 28, 0.22);
 
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -63,8 +76,37 @@ html {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  .reveal { opacity: 1 !important; transform: none !important; }
+}
+
+/* ---- Motion ----------------------------------------------------------
+   One orchestrated page-load sequence, then motion only on interaction.
+   `--i` staggers siblings without a per-element animation-delay rule. */
+@keyframes rise {
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes sheen {
+  from { transform: translateX(-120%) skewX(-12deg); }
+  to   { transform: translateX(320%) skewX(-12deg); }
+}
+
+.reveal {
+  animation: rise 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+/* Scroll-triggered variant: hidden until observed, then the same rise. */
+.reveal-pending { opacity: 0; }
+/* If the animation never runs, the content must still be readable. */
+.reveal-pending.reveal-in { opacity: 1; }
+.reveal-in {
+  animation: rise 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
 }
 
 body {
@@ -143,6 +185,42 @@ button, input, textarea, select { font: inherit; }
 @media (min-width: 640px) { .section-shell { padding-inline: 2rem; } }
 @media (min-width: 1024px) { .section-shell { padding-inline: 2.5rem; } }
 
+/* ---- Hero ----------------------------------------------------------
+   A warm wash plus one soft crimson bloom, so the fold has depth without
+   a decorative gradient blob competing with the product image. */
+.hero-wash {
+  background: var(--grad-warm);
+}
+.hero-wash::before {
+  content: "";
+  position: absolute;
+  top: -18%;
+  right: -8%;
+  width: min(46rem, 70%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(204, 44, 38, 0.10),
+    rgba(204, 44, 38, 0) 68%
+  );
+  pointer-events: none;
+}
+
+/* "Open now" indicator. Slow enough not to nag. */
+.pulse-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--color-ok);
+  box-shadow: 0 0 0 0 rgba(76, 124, 43, 0.5);
+  animation: pulse 2.4s ease-out infinite;
+}
+@keyframes pulse {
+  70%  { box-shadow: 0 0 0 0.45rem rgba(76, 124, 43, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(76, 124, 43, 0); }
+}
+
 /* ---- Section heading: a hairline instead of a shouty eyebrow ---- */
 .rule-heading {
   border-top: 1px solid var(--color-line);
@@ -154,17 +232,52 @@ button, input, textarea, select { font: inherit; }
   background: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
 }
 
 .card-interactive {
+  position: relative;
   background: var(--color-surface);
   border: 1px solid var(--color-line);
   border-radius: var(--radius-card);
-  transition: border-color 160ms ease, box-shadow 160ms ease;
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
+    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .card-interactive:hover {
+  transform: translateY(-3px);
   border-color: var(--color-signal-200);
-  box-shadow: 0 1px 2px rgba(18, 22, 28, 0.04), 0 8px 24px -12px rgba(18, 22, 28, 0.18);
+  box-shadow: var(--shadow-lg);
+}
+.card-interactive:active { transform: translateY(-1px); }
+
+/* Product imagery lifts slightly with its card. */
+.card-interactive .zoom {
+  transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-interactive:hover .zoom { transform: scale(1.045); }
+
+/* A light sweep across the image on hover — the one flourish. */
+.sheen { position: relative; overflow: hidden; }
+.sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 45%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.42),
+    transparent
+  );
+  opacity: 0;
+}
+.card-interactive:hover .sheen::after {
+  opacity: 1;
+  animation: sheen 900ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* ---- Chips ---- */
@@ -173,12 +286,18 @@ button, input, textarea, select { font: inherit; }
   align-items: center;
   gap: 0.3rem;
   border-radius: 999px;
-  padding: 0.2rem 0.6rem;
+  padding: 0.22rem 0.65rem;
   font-size: 0.75rem;
   font-weight: 550;
   line-height: 1.4;
   white-space: nowrap;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
 }
+button.chip:active { transform: scale(0.97); }
 .chip-condition {
   background: var(--color-tag-soft);
   border: 1px solid var(--color-tag-line);
@@ -209,18 +328,34 @@ button, input, textarea, select { font: inherit; }
   justify-content: center;
   gap: 0.5rem;
   border-radius: 999px;
-  padding: 0.6875rem 1.25rem;
+  padding: 0.6875rem 1.375rem;
   font-size: 0.9375rem;
   font-weight: 600;
   min-height: 44px;
-  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    box-shadow 240ms ease,
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
+.btn-primary:hover,
+.btn-ok:hover { transform: translateY(-1px); }
+.btn-primary:active,
+.btn-ok:active,
+.btn-secondary:active { transform: translateY(0); }
+
 .btn-primary {
   background: var(--color-signal-600);
   color: #fff;
   border: 1px solid var(--color-signal-600);
+  box-shadow: 0 1px 2px rgba(180, 31, 26, 0.20);
 }
-.btn-primary:hover { background: var(--color-signal-700); border-color: var(--color-signal-700); }
+.btn-primary:hover {
+  background: var(--color-signal-700);
+  border-color: var(--color-signal-700);
+  box-shadow: 0 6px 18px -6px rgba(180, 31, 26, 0.55);
+}
 .btn-secondary {
   background: transparent;
   color: var(--color-ink);
@@ -231,8 +366,10 @@ button, input, textarea, select { font: inherit; }
   background: var(--color-ok);
   color: #fff;
   border: 1px solid var(--color-ok);
+  box-shadow: 0 1px 2px rgba(76, 124, 43, 0.20);
 }
-.btn-ok:hover { background: #3d6a1b; border-color: #3d6a1b; }
+.btn-ok:hover { box-shadow: 0 6px 18px -6px rgba(76, 124, 43, 0.55); }
+.btn-ok:hover { background: #3f6a23; border-color: #3f6a23; }
 
 .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 .hide-scrollbar::-webkit-scrollbar { display: none; }

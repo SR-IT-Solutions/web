@@ -1,18 +1,28 @@
 import { useMemo, useState } from "react";
 import { useCatalog } from "../useCatelog";
+import { CATEGORIES } from "../../../core/data/siteData";
 import CatalogCard from "./CatalogCard";
 
 function CatalogPage() {
   const { catalog, loading, error } = useCatalog();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
+  // Every category the shop stocks, so the filter row is stable even when
+  // only some of them currently have products. Counts show what's live.
   const categories = useMemo(() => {
-    if (!catalog.length) return [];
-    const unique = [
-      ...new Set(catalog.map((item) => item.category).filter(Boolean)),
-    ].sort();
-    // A lone category filters nothing — don't show a pointless control.
-    return unique.length > 1 ? ["All", ...unique] : [];
+    const counts = catalog.reduce((acc, item) => {
+      if (item.category) acc[item.category] = (acc[item.category] ?? 0) + 1;
+      return acc;
+    }, {});
+
+    const known = [
+      ...new Set([...CATEGORIES, ...Object.keys(counts)]),
+    ];
+
+    return [
+      { name: "All", count: catalog.length },
+      ...known.map((name) => ({ name, count: counts[name] ?? 0 })),
+    ];
   }, [catalog]);
 
   const filteredCatalog = useMemo(
@@ -31,25 +41,33 @@ function CatalogPage() {
         what&rsquo;s on the shelf today.
       </p>
 
-      {categories.length > 0 && (
-        <div className="hide-scrollbar mt-10 -mx-1 flex items-center gap-1.5 overflow-x-auto border-y border-line px-1 py-4">
-          {categories.map((category) => (
-            <button
-              key={category}
-              type="button"
-              onClick={() => setSelectedCategory(category)}
-              className={`chip min-h-9 shrink-0 px-3.5 transition ${
-                selectedCategory === category
-                  ? "border border-signal-600 bg-signal-600 text-white"
-                  : "chip-quiet hover:border-slate-light"
-              }`}
-              aria-pressed={selectedCategory === category}
+      <div className="hide-scrollbar -mx-1 mt-10 flex items-center gap-2 overflow-x-auto border-y border-line px-1 py-4">
+        {categories.map(({ name, count }) => (
+          <button
+            key={name}
+            type="button"
+            onClick={() => setSelectedCategory(name)}
+            disabled={count === 0}
+            className={`chip min-h-9 shrink-0 px-3.5 ${
+              selectedCategory === name
+                ? "border border-signal-600 bg-signal-600 text-white"
+                : count === 0
+                  ? "chip-quiet cursor-not-allowed opacity-45"
+                  : "chip-quiet hover:border-signal-200 hover:text-signal-600"
+            }`}
+            aria-pressed={selectedCategory === name}
+          >
+            {name}
+            <span
+              className={
+                selectedCategory === name ? "text-white/70" : "text-slate-light"
+              }
             >
-              {category}
-            </button>
-          ))}
-        </div>
-      )}
+              {count}
+            </span>
+          </button>
+        ))}
+      </div>
 
       {loading ? (
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -86,8 +104,10 @@ function CatalogPage() {
             {filteredCatalog.length === 1 ? "product" : "products"}
           </p>
           <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {filteredCatalog.map((item) => (
-              <CatalogCard key={item.id} item={item} />
+            {filteredCatalog.map((item, index) => (
+              <div key={item.id} className="reveal" style={{ "--i": index }}>
+                <CatalogCard item={item} />
+              </div>
             ))}
           </div>
         </>
