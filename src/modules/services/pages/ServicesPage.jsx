@@ -1,9 +1,9 @@
 import { siteData } from "../../../core/data/siteData";
 import { MessageCircle } from "lucide-react";
 import desktopsImg from "../../../assets/services/desktops.jpg";
-import miniPcsImg from "../../../assets/services/mini-pcs.jpg";
-import refurbishedImg from "../../../assets/services/refurbished.jpg";
 import accessoriesImg from "../../../assets/services/accessories.jpg";
+import repairsImg from "../../../assets/services/repairs.jpg";
+import businessImg from "../../../assets/services/business.jpg";
 
 const serviceCards = [
   {
@@ -17,12 +17,12 @@ const serviceCards = [
     text: "Monitors, keyboards, mice, printers, CCTV equipment, and the parts that finish a setup.",
   },
   {
-    image: refurbishedImg,
+    image: repairsImg,
     title: "Repairs and diagnostics",
     text: "Troubleshooting and repair for laptops, desktops, and related equipment. Bring it in and we'll tell you what's wrong.",
   },
   {
-    image: miniPcsImg,
+    image: businessImg,
     title: "Business equipment",
     text: "Printers, workstations, and hardware for shops, offices, and local businesses.",
   },
