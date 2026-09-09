@@ -63,8 +63,17 @@ function ProductCarousel() {
         className={`mt-8 pb-2 ${
           products.length > 3
             ? "hide-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto"
-            : "grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+            : "grid gap-5"
         }`}
+        style={
+          products.length > 3
+            ? undefined
+            : {
+                // Match the track count to what we actually have, and cap the
+                // width so a single product doesn't stretch into a banner.
+                gridTemplateColumns: `repeat(${Math.min(products.length, 3)}, minmax(0, 360px))`,
+              }
+        }
       >
         {loading
           ? Array.from({ length: 4 }).map((_, index) => (

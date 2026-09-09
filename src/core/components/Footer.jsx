@@ -133,7 +133,7 @@ function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-line-soft py-5 pb-24 text-center text-[13px] text-slate md:pb-5">
+      <div className="border-t border-line-soft py-5 text-center text-[13px] text-slate">
         © {new Date().getFullYear()} SR IT Solutions
       </div>
     </footer>

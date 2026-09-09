@@ -41,7 +41,7 @@ function CatalogPage() {
         what&rsquo;s on the shelf today.
       </p>
 
-      <div className="hide-scrollbar -mx-1 mt-10 flex items-center gap-2 overflow-x-auto border-y border-line px-1 py-4">
+      <div className="hide-scrollbar scroll-fade -mx-1 mt-10 flex items-center gap-2 overflow-x-auto border-y border-line px-1 py-4 pr-10 lg:pr-1 lg:[mask-image:none]">
         {categories.map(({ name, count }) => (
           <button
             key={name}
@@ -52,10 +52,11 @@ function CatalogPage() {
               selectedCategory === name
                 ? "border border-signal-600 bg-signal-600 text-white"
                 : count === 0
-                  ? "chip-quiet cursor-not-allowed opacity-45"
+                  ? "chip-quiet cursor-not-allowed !text-slate-light"
                   : "chip-quiet hover:border-signal-200 hover:text-signal-600"
             }`}
             aria-pressed={selectedCategory === name}
+            title={count === 0 ? `No ${name} in stock right now` : undefined}
           >
             {name}
           </button>

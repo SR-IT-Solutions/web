@@ -68,7 +68,7 @@ function FaqSection() {
           <div key={columnIndex} className="flex flex-col gap-4">
             {column.map((faq) => (
               <details key={faq.question} className="card-interactive px-5 py-4">
-                <summary className="faq-summary pr-9 text-[15px] font-semibold text-ink transition hover:text-signal-600">
+                <summary className="faq-summary pr-9 text-pretty text-[15px] font-semibold text-ink transition hover:text-signal-600">
                   {faq.question}
                 </summary>
                 <p className="t-body measure mt-3 text-[0.9375rem]">

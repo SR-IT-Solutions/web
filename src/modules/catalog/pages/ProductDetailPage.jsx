@@ -95,7 +95,7 @@ function ProductDetailPage() {
     <div className="section-shell py-10 sm:py-14">
       <Link
         to="/catalog"
-        className="inline-flex items-center gap-1.5 text-[15px] font-medium text-signal-600 transition hover:text-signal-700"
+        className="inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-signal-600 transition hover:text-signal-700"
       >
         <ArrowLeft size={16} />
         Catalog
@@ -103,12 +103,12 @@ function ProductDetailPage() {
 
       <div className="mt-6 grid items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
-          <div className="card aspect-4/3 overflow-hidden bg-paper">
+          <div className="card aspect-square max-h-[380px] overflow-hidden bg-white p-4 sm:max-h-none">
             {images[activeImage] && (
               <img
                 src={images[activeImage]}
                 alt={product.title}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             )}
           </div>
@@ -135,7 +135,7 @@ function ProductDetailPage() {
           )}
         </div>
 
-        <div>
+        <div className="card p-6 sm:p-7">
           <p className="t-micro">{product.category}</p>
           <h1 className="t-section mt-1.5 text-ink">{product.title}</h1>
 
@@ -164,7 +164,7 @@ function ProductDetailPage() {
                         }
                         className={`chip min-h-9 px-3.5 transition ${
                           config[key] === value
-                            ? "border border-signal-600 bg-signal-50 text-signal-700"
+                            ? "border border-signal-600 bg-signal-600 font-semibold text-white"
                             : "chip-quiet hover:border-slate-light"
                         }`}
                         aria-pressed={config[key] === value}

@@ -103,7 +103,7 @@ function ContactPage() {
             <iframe
               title="SR IT Solutions on Google Maps"
               src={siteData.brand.mapsEmbedHref}
-              className="h-56 w-full border-0"
+              className="aspect-4/3 w-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
@@ -122,6 +122,7 @@ function ContactPage() {
               <span className="t-micro mb-1.5 block text-ink">Name</span>
               <input
                 type="text"
+                placeholder="Your name"
                 className={field}
                 value={form.name}
                 onChange={set("name")}
@@ -133,6 +134,7 @@ function ContactPage() {
               </span>
               <input
                 type="tel"
+                placeholder="10-digit mobile number"
                 className={field}
                 value={form.contact}
                 onChange={set("contact")}

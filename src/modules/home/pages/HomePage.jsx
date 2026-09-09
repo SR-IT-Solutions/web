@@ -68,7 +68,7 @@ function HomePage() {
               </a>
             </div>
 
-            {categories.length > 0 && (
+            {categories.length > 1 && (
               <div className="reveal mt-9 border-t border-white/10 pt-5" style={{ "--i": 4 }}>
                 <p className="t-micro text-white/45!">In the catalog right now</p>
                 <ul className="mt-3 flex flex-wrap gap-2">
@@ -94,11 +94,11 @@ function HomePage() {
               className="card-interactive reveal block overflow-hidden border-white/12! bg-white/5! backdrop-blur-sm"
               style={{ "--i": 2 }}
             >
-              <div className="sheen aspect-4/3 overflow-hidden bg-white">
+              <div className="sheen aspect-4/3 overflow-hidden bg-white p-6">
                 <img
                   src={lead.image}
                   alt=""
-                  className="zoom h-full w-full object-cover"
+                  className="zoom h-full w-full object-contain"
                 />
               </div>
               <div className="flex items-end justify-between gap-4 p-5">
@@ -141,7 +141,7 @@ function HomePage() {
               </div>
               <div className="p-5">
                 <h3 className="t-card text-ink">{service.title}</h3>
-                <p className="t-body mt-2 text-[0.9375rem]">
+                <p className="t-body mt-2 text-pretty text-[0.9375rem]">
                   {service.description}
                 </p>
               </div>
@@ -163,7 +163,7 @@ function HomePage() {
                 key={step}
                 data-reveal
                 style={{ "--i": index }}
-                className="card-interactive p-6"
+                className="card-interactive flex flex-col justify-between p-6"
               >
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-signal-50 font-display text-[13px] font-bold tabular-nums text-signal-600">
                   {index + 1}

@@ -39,7 +39,7 @@ function ServicesPage() {
 
       <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {serviceCards.map(({ image, title, text }) => (
-          <article key={title} className="card-interactive overflow-hidden">
+          <article key={title} className="card-interactive flex flex-col overflow-hidden">
             <div className="sheen aspect-16/10 overflow-hidden bg-paper">
               <img
                 src={image}
@@ -49,25 +49,29 @@ function ServicesPage() {
                 decoding="async"
               />
             </div>
-            <div className="p-5">
-              <h2 className="t-card text-ink">{title}</h2>
-              <p className="t-body mt-2 text-[0.9375rem]">{text}</p>
+            <div className="flex flex-1 flex-col p-5">
+              {/* Two lines reserved so every paragraph starts on the same
+                  baseline, whether the title wraps or not. */}
+              <h2 className="t-card min-h-[2.6em] text-ink">{title}</h2>
+              <p className="t-body mt-1 text-pretty text-[0.9375rem]">{text}</p>
             </div>
           </article>
         ))}
       </div>
 
-      <div className="card mt-10 p-7">
-        <h2 className="t-section text-ink">Need something specific?</h2>
-        <p className="t-body measure mt-3">
-          Tell us the budget and what the machine is for, and we&rsquo;ll say
-          what we have that fits.
-        </p>
+      <div className="card mt-10 flex flex-col gap-6 p-7 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="t-section text-ink">Need something specific?</h2>
+          <p className="t-body mt-2 max-w-md text-pretty">
+            Tell us the budget and what the machine is for, and we&rsquo;ll say
+            what we have that fits.
+          </p>
+        </div>
         <a
           href={siteData.brand.whatsappHref}
           target="_blank"
           rel="noreferrer"
-          className="btn-ok mt-5"
+          className="btn-ok shrink-0"
         >
           <MessageCircle size={17} />
           Message us on WhatsApp

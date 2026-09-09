@@ -32,16 +32,16 @@ function Navbar() {
               className="h-9 w-9 shrink-0 object-contain sm:h-10 sm:w-10"
             />
             <span className="min-w-0 leading-none">
-              <span className="block font-display text-[15px] font-bold tracking-tight text-ink sm:text-base">
+              <span className="block whitespace-nowrap font-display text-[15px] font-bold tracking-tight text-ink sm:text-base">
                 SR IT Solutions
               </span>
-              <span className="mt-1 block text-[11px] text-slate">
+              <span className="mt-1 hidden whitespace-nowrap text-[11px] text-slate sm:block">
                 Arekere, Bengaluru
               </span>
             </span>
           </NavLink>
 
-          <nav className="hidden items-center gap-4 md:flex lg:gap-7">
+          <nav className="hidden items-center gap-4 md:flex lg:gap-6">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
