@@ -44,8 +44,8 @@ function ContactPage() {
         and we&rsquo;ll reply with what&rsquo;s in stock.
       </p>
 
-      <div className="mt-12 grid items-start gap-12 lg:grid-cols-[0.85fr_1.15fr]">
-        <div>
+      <div className="mt-12 grid items-start gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="card p-5 sm:p-7">
           <ul className="space-y-5">
             <li>
               <a
@@ -99,7 +99,7 @@ function ContactPage() {
             {siteData.brand.hours}
           </p>
 
-          <div className="card mt-6 overflow-hidden">
+          <div className="mt-6 overflow-hidden rounded-sm border border-line">
             <iframe
               title="SR IT Solutions on Google Maps"
               src={siteData.brand.mapsEmbedHref}

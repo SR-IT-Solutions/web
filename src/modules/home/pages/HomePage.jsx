@@ -76,7 +76,7 @@ function HomePage() {
                     <li key={category.name}>
                       <Link
                         to="/catalog"
-                        className="chip border border-white/14 bg-white/6 text-white/80 hover:border-white/30 hover:text-white"
+                        className="chip min-h-9 border border-white/14 bg-white/6 px-3 text-white/80 hover:border-white/30 hover:text-white"
                       >
                         {category.name}
                       </Link>

@@ -58,12 +58,12 @@ function Footer() {
           <h2 className="font-display text-[15px] font-semibold text-ink">
             Browse
           </h2>
-          <ul className="mt-4 space-y-2.5">
+          <ul className="mt-2">
             {quickLinks.map((link) => (
               <li key={link.to}>
                 <Link
                   to={link.to}
-                  className="text-[15px] text-slate transition hover:text-signal-600"
+                  className="inline-flex min-h-11 items-center text-[15px] text-slate transition hover:text-signal-600"
                 >
                   {link.label}
                 </Link>
@@ -76,10 +76,10 @@ function Footer() {
           <h2 className="font-display text-[15px] font-semibold text-ink">
             Visit or get in touch
           </h2>
-          <ul className="mt-4 space-y-3">
+          <ul className="mt-2 space-y-1">
             <li>
               <a
-                className="flex items-center gap-2.5 text-[15px] text-slate transition hover:text-signal-600"
+                className="flex min-h-11 items-center gap-2.5 text-[15px] text-slate transition hover:text-signal-600"
                 href={siteData.brand.phoneHref}
               >
                 <Phone size={16} className="shrink-0 text-signal-600" />
@@ -90,7 +90,7 @@ function Footer() {
             </li>
             <li>
               <a
-                className="flex items-center gap-2.5 text-[15px] text-slate transition hover:text-signal-600"
+                className="flex min-h-11 items-center gap-2.5 text-[15px] text-slate transition hover:text-signal-600"
                 href={siteData.brand.whatsappHref}
                 target="_blank"
                 rel="noreferrer"
@@ -101,7 +101,7 @@ function Footer() {
             </li>
             <li>
               <a
-                className="flex items-start gap-2.5 text-[15px] leading-relaxed text-slate transition hover:text-signal-600"
+                className="flex min-h-11 items-start gap-2.5 py-1 text-[15px] leading-relaxed text-slate transition hover:text-signal-600"
                 href={siteData.brand.mapsHref}
                 target="_blank"
                 rel="noreferrer"
@@ -122,7 +122,7 @@ function Footer() {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="chip chip-quiet transition hover:border-signal-200 hover:text-signal-600"
+                  className="chip chip-quiet min-h-9 px-3 transition hover:border-signal-200 hover:text-signal-600"
                 >
                   <Icon size={13} className="shrink-0" />
                   {label}

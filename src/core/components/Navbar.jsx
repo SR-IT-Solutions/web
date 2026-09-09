@@ -63,7 +63,7 @@ function Navbar() {
           <div className="flex shrink-0 items-center gap-2">
             <a
               href={siteData.brand.phoneHref}
-              className="btn-secondary min-h-0! px-3! py-2! text-sm!"
+              className="btn-secondary min-h-11! px-3.5! py-2! text-sm!"
               aria-label="Call SR IT Solutions"
             >
               <PhoneCall size={15} className="shrink-0 text-signal-600" />
@@ -73,7 +73,7 @@ function Navbar() {
               href={siteData.brand.whatsappHref}
               target="_blank"
               rel="noreferrer"
-              className="btn-ok min-h-0! px-3! py-2! text-sm!"
+              className="btn-ok min-h-11! px-3.5! py-2! text-sm!"
             >
               <MessageCircle size={15} className="shrink-0" />
               <span className="hidden min-[380px]:inline">WhatsApp</span>

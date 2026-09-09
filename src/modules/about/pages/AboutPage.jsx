@@ -25,7 +25,7 @@ function AboutPage() {
         accessories, and repair services.
       </p>
 
-      <div className="mt-10 grid gap-5 sm:grid-cols-3">
+      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {values.map(({ title, text }) => (
           <article key={title} className="card-interactive p-6">
             <h2 className="t-card text-ink">{title}</h2>

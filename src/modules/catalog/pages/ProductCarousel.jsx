@@ -29,10 +29,12 @@ function ProductCarousel() {
           Currently in stock
         </h2>
 
-        <div className={`flex items-center gap-2 ${products.length > 3 ? "" : "sm:[&>button]:hidden"}`}>
+        <div
+          className={`flex items-center gap-2 ${products.length > 3 ? "" : "sm:[&>button]:hidden"}`}
+        >
           <Link
             to="/catalog"
-            className="hidden text-[15px] font-medium text-signal-600 transition hover:text-signal-700 sm:inline-flex sm:items-center sm:gap-1.5"
+            className="hidden text-[15px] font-medium text-signal-600 transition hover:text-signal-700 sm:inline-flex sm:min-h-11 sm:items-center sm:gap-1.5"
           >
             See all
             <ArrowRight size={15} />
@@ -89,7 +91,7 @@ function ProductCarousel() {
 
       <Link
         to="/catalog"
-        className="mt-4 inline-flex items-center gap-1.5 text-[15px] font-medium text-signal-600 sm:hidden"
+        className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-signal-600 sm:hidden"
       >
         See all products
         <ArrowRight size={15} />
