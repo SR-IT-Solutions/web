@@ -37,7 +37,7 @@ function ServicesPage() {
         {siteData.brand.location}.
       </p>
 
-      <div className="mt-10 grid gap-5 sm:grid-cols-2">
+      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {serviceCards.map(({ image, title, text }) => (
           <article key={title} className="card-interactive overflow-hidden">
             <div className="sheen aspect-16/10 overflow-hidden bg-paper">
