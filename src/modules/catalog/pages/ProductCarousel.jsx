@@ -68,7 +68,7 @@ function ProductCarousel() {
           ? Array.from({ length: 4 }).map((_, index) => (
               <div
                 key={index}
-                className="card h-72 min-w-[78vw] animate-pulse bg-line-soft sm:min-w-[260px] lg:min-w-[calc((100%-3rem)/4)]"
+                className="card h-72 min-w-[78vw] animate-pulse bg-line-soft sm:min-w-65 lg:min-w-[calc((100%-3rem)/4)]"
                 aria-hidden="true"
               />
             ))

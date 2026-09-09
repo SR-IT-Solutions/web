@@ -103,7 +103,7 @@ function ProductDetailPage() {
 
       <div className="mt-6 grid items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
-          <div className="card aspect-[4/3] overflow-hidden bg-paper">
+          <div className="card aspect-4/3 overflow-hidden bg-paper">
             {images[activeImage] && (
               <img
                 src={images[activeImage]}
@@ -120,7 +120,7 @@ function ProductDetailPage() {
                   key={src}
                   type="button"
                   onClick={() => setActiveImage(index)}
-                  className={`h-16 w-16 shrink-0 overflow-hidden rounded-[8px] border-2 transition sm:h-20 sm:w-20 ${
+                  className={`h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 transition sm:h-20 sm:w-20 ${
                     index === activeImage
                       ? "border-signal-600"
                       : "border-line opacity-70 hover:opacity-100"
@@ -140,7 +140,7 @@ function ProductDetailPage() {
           <h1 className="t-section mt-1.5 text-ink">{product.title}</h1>
 
           <div className="mt-4 flex items-center gap-3">
-            <span className="price !text-[1.5rem]">{product.price}</span>
+            <span className="price text-[1.5rem]!">{product.price}</span>
             {product.tag && (
               <span className="chip chip-condition">{product.tag}</span>
             )}

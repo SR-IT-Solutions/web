@@ -44,25 +44,25 @@ export const siteData = {
   ],
   services: [
     {
-      icon: "Laptop",
+      image: "desktops",
       title: "Desktop Computers",
       description:
         "Used, refurbished, and business-ready desktops for home, office, and everyday work.",
     },
     {
-      icon: "ShieldCheck",
+      image: "mini-pcs",
       title: "Mini PCs",
       description:
         "Compact computer setups for offices, home users, digital signage, and space-saving desks.",
     },
     {
-      icon: "Database",
+      image: "refurbished",
       title: "Refurbished Products",
       description:
         "Quality-checked used and refurbished laptops and desktops at practical prices.",
     },
     {
-      icon: "ChartNoAxesCombined",
+      image: "accessories",
       title: "Computer Accessories",
       description:
         "Computer accessories, peripherals, printers, CCTV equipment, and essential setup items.",

@@ -34,7 +34,7 @@ function ContactPage() {
   };
 
   const field =
-    "w-full rounded-[10px] border border-line bg-surface px-3.5 py-2.5 text-[15px] text-ink outline-none transition placeholder:text-slate-light focus:border-signal-500";
+    "w-full rounded-sm border border-line bg-surface px-3.5 py-2.5 text-[15px] text-ink outline-none transition placeholder:text-slate-light focus:border-signal-500";
 
   return (
     <div className="section-shell py-12 sm:py-16">

@@ -2,6 +2,17 @@ import { ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { siteData } from "../../../core/data/siteData";
 import { useReveal } from "../../../core/hooks/useReveal";
+import desktopsImg from "../../../assets/services/desktops.jpg";
+import miniPcsImg from "../../../assets/services/mini-pcs.jpg";
+import refurbishedImg from "../../../assets/services/refurbished.jpg";
+import accessoriesImg from "../../../assets/services/accessories.jpg";
+
+const serviceImages = {
+  desktops: desktopsImg,
+  "mini-pcs": miniPcsImg,
+  refurbished: refurbishedImg,
+  accessories: accessoriesImg,
+};
 import { useCatalog } from "../../catalog/useCatelog";
 import FaqSection from "../components/FaqSection";
 import ProductCarousel from "../../catalog/pages/ProductCarousel";
@@ -36,7 +47,7 @@ function HomePage() {
             <h1 className="reveal t-display mt-5 text-white" style={{ "--i": 1 }}>
               Computers that are checked, priced fairly, and ready to work.
             </h1>
-            <p className="reveal t-body measure mt-5 !text-white/62" style={{ "--i": 2 }}>
+            <p className="reveal t-body measure mt-5 text-white/62!" style={{ "--i": 2 }}>
               {siteData.brand.tagline}. Walk in to our store, or message us and
               we&rsquo;ll tell you what&rsquo;s in stock today.
             </p>
@@ -59,7 +70,7 @@ function HomePage() {
 
             {categories.length > 0 && (
               <div className="reveal mt-9 border-t border-white/10 pt-5" style={{ "--i": 4 }}>
-                <p className="t-micro !text-white/45">In the catalog right now</p>
+                <p className="t-micro text-white/45!">In the catalog right now</p>
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {categories.map((category) => (
                     <li key={category.name}>
@@ -80,10 +91,10 @@ function HomePage() {
           {lead && (
             <Link
               to={`/catalog/${lead.id}`}
-              className="card-interactive reveal block overflow-hidden !border-white/12 !bg-white/[0.05] backdrop-blur-sm"
+              className="card-interactive reveal block overflow-hidden border-white/12! bg-white/5! backdrop-blur-sm"
               style={{ "--i": 2 }}
             >
-              <div className="sheen aspect-[4/3] overflow-hidden bg-white">
+              <div className="sheen aspect-4/3 overflow-hidden bg-white">
                 <img
                   src={lead.image}
                   alt=""
@@ -95,7 +106,7 @@ function HomePage() {
                   <p className="text-[13px] text-white/45">In stock now</p>
                   <h2 className="t-card mt-1 text-white">{lead.title}</h2>
                 </div>
-                <span className="price shrink-0 !text-[#ffb454]">
+                <span className="price shrink-0 text-[#ffb454]!">
                   {lead.price}
                 </span>
               </div>
@@ -111,18 +122,29 @@ function HomePage() {
           <h2 className="t-section text-ink">What we sell and service</h2>
         </div>
 
-        <div className="mt-8 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {siteData.services.map((service, index) => (
             <article
               key={service.title}
               data-reveal
               style={{ "--i": index }}
-              className="card-interactive p-6"
+              className="card-interactive overflow-hidden"
             >
-              <h3 className="t-card text-ink">{service.title}</h3>
-              <p className="t-body mt-2.5 text-[0.9375rem]">
-                {service.description}
-              </p>
+              <div className="sheen aspect-16/10 overflow-hidden bg-paper">
+                <img
+                  src={serviceImages[service.image]}
+                  alt=""
+                  className="zoom h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div className="p-5">
+                <h3 className="t-card text-ink">{service.title}</h3>
+                <p className="t-body mt-2 text-[0.9375rem]">
+                  {service.description}
+                </p>
+              </div>
             </article>
           ))}
         </div>

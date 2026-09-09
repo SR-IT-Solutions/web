@@ -47,7 +47,8 @@
   --color-night-line: rgba(255, 255, 255, 0.10);
   --color-night-text: rgba(255, 255, 255, 0.66);
 
-  /* Radius scale — cards are notably rounder now. */
+  /* Radius scale — cards are notably rounder now. These are @theme tokens,
+     so they also generate `rounded-card` / `rounded-sm` utilities. */
   --radius-card: 16px;
   --radius-sm: 10px;
 

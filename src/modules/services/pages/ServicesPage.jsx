@@ -1,20 +1,28 @@
 import { siteData } from "../../../core/data/siteData";
 import { MessageCircle } from "lucide-react";
+import desktopsImg from "../../../assets/services/desktops.jpg";
+import miniPcsImg from "../../../assets/services/mini-pcs.jpg";
+import refurbishedImg from "../../../assets/services/refurbished.jpg";
+import accessoriesImg from "../../../assets/services/accessories.jpg";
 
 const serviceCards = [
   {
+    image: desktopsImg,
     title: "Laptops and desktops",
     text: "New, used, and refurbished machines for home, office, and everyday work. Each one is tested before it goes on the shelf.",
   },
   {
+    image: accessoriesImg,
     title: "Accessories and peripherals",
     text: "Monitors, keyboards, mice, printers, CCTV equipment, and the parts that finish a setup.",
   },
   {
+    image: refurbishedImg,
     title: "Repairs and diagnostics",
     text: "Troubleshooting and repair for laptops, desktops, and related equipment. Bring it in and we'll tell you what's wrong.",
   },
   {
+    image: miniPcsImg,
     title: "Business equipment",
     text: "Printers, workstations, and hardware for shops, offices, and local businesses.",
   },
@@ -30,10 +38,21 @@ function ServicesPage() {
       </p>
 
       <div className="mt-10 grid gap-5 sm:grid-cols-2">
-        {serviceCards.map(({ title, text }) => (
-          <article key={title} className="card-interactive p-6">
-            <h2 className="t-card text-ink">{title}</h2>
-            <p className="t-body mt-2.5 text-[0.9375rem]">{text}</p>
+        {serviceCards.map(({ image, title, text }) => (
+          <article key={title} className="card-interactive overflow-hidden">
+            <div className="sheen aspect-16/10 overflow-hidden bg-paper">
+              <img
+                src={image}
+                alt=""
+                className="zoom h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div className="p-5">
+              <h2 className="t-card text-ink">{title}</h2>
+              <p className="t-body mt-2 text-[0.9375rem]">{text}</p>
+            </div>
           </article>
         ))}
       </div>

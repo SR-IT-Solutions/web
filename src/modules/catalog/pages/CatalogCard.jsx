@@ -23,7 +23,7 @@ export function CatalogCard({ item, viewMode = "grid" }) {
         to={`/catalog/${item.id}`}
         className="card-interactive flex flex-col gap-4 overflow-hidden p-3 sm:flex-row sm:items-center sm:gap-5"
       >
-        <div className="sheen h-44 shrink-0 overflow-hidden rounded-[10px] bg-paper sm:h-24 sm:w-32">
+        <div className="sheen h-44 shrink-0 overflow-hidden rounded-sm bg-paper sm:h-24 sm:w-32">
           {item.image && (
             <img
               src={item.image}
@@ -56,7 +56,7 @@ export function CatalogCard({ item, viewMode = "grid" }) {
       to={`/catalog/${item.id}`}
       className="card-interactive flex flex-col overflow-hidden"
     >
-      <div className="sheen aspect-[4/3] overflow-hidden bg-paper">
+      <div className="sheen aspect-4/3 overflow-hidden bg-paper">
         {item.image && (
           <img
             src={item.image}
