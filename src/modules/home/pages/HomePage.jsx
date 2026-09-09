@@ -10,7 +10,7 @@ function HomePage() {
   const { catalog } = useCatalog();
   const revealRef = useReveal();
 
-  // Real counts from the live catalog — no invented figures.
+  // Categories that actually have stock, busiest first.
   const categories = [...new Set(catalog.map((item) => item.category))]
     .map((name) => ({
       name,
@@ -68,7 +68,6 @@ function HomePage() {
                         className="chip border border-white/14 bg-white/6 text-white/80 hover:border-white/30 hover:text-white"
                       >
                         {category.name}
-                        <span className="text-white/45">{category.count}</span>
                       </Link>
                     </li>
                   ))}

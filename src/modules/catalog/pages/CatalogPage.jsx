@@ -58,13 +58,6 @@ function CatalogPage() {
             aria-pressed={selectedCategory === name}
           >
             {name}
-            <span
-              className={
-                selectedCategory === name ? "text-white/70" : "text-slate-light"
-              }
-            >
-              {count}
-            </span>
           </button>
         ))}
       </div>
