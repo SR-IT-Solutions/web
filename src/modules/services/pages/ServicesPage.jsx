@@ -29,16 +29,16 @@ function ServicesPage() {
         {siteData.brand.location}.
       </p>
 
-      <div className="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-2">
+      <div className="mt-10 grid gap-5 sm:grid-cols-2">
         {serviceCards.map(({ title, text }) => (
-          <article key={title} className="border-t border-line pt-5">
+          <article key={title} className="card-interactive p-6">
             <h2 className="t-card text-ink">{title}</h2>
-            <p className="t-body measure mt-2 text-[0.9375rem]">{text}</p>
+            <p className="t-body mt-2.5 text-[0.9375rem]">{text}</p>
           </article>
         ))}
       </div>
 
-      <div className="mt-14 border-t border-line pt-8">
+      <div className="card mt-10 p-7">
         <h2 className="t-section text-ink">Need something specific?</h2>
         <p className="t-body measure mt-3">
           Tell us the budget and what the machine is for, and we&rsquo;ll say

@@ -25,16 +25,16 @@ function AboutPage() {
         accessories, and repair services.
       </p>
 
-      <div className="mt-12 grid gap-x-10 gap-y-9 sm:grid-cols-3">
+      <div className="mt-10 grid gap-5 sm:grid-cols-3">
         {values.map(({ title, text }) => (
-          <article key={title} className="border-t border-line pt-5">
+          <article key={title} className="card-interactive p-6">
             <h2 className="t-card text-ink">{title}</h2>
-            <p className="t-body mt-2 text-[0.9375rem]">{text}</p>
+            <p className="t-body mt-2.5 text-[0.9375rem]">{text}</p>
           </article>
         ))}
       </div>
 
-      <div className="mt-14 border-t border-line pt-8">
+      <div className="card mt-10 p-7">
         <h2 className="t-section text-ink">Find us</h2>
         <p className="t-body measure mt-3">{siteData.brand.address}</p>
         <p className="t-micro mt-2">{siteData.brand.hours}</p>

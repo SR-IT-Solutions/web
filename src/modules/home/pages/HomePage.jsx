@@ -24,18 +24,19 @@ function HomePage() {
   return (
     <div ref={revealRef}>
       <section className="hero-wash relative overflow-hidden border-b border-line">
-        <div className="section-shell relative grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
+        <div className="section-shell relative grid items-center gap-10 py-14 sm:py-18 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:py-20">
           <div>
-            <p className="reveal t-micro" style={{ "--i": 0 }}>
-              <span className="inline-flex items-center gap-2">
-                <span className="pulse-dot" aria-hidden="true" />
-                Open in {siteData.brand.location}
-              </span>
+            <p
+              className="reveal inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/6 px-3 py-1.5 text-[13px] font-medium text-white/70"
+              style={{ "--i": 0 }}
+            >
+              <span className="pulse-dot" aria-hidden="true" />
+              Open in {siteData.brand.location}
             </p>
-            <h1 className="reveal t-display mt-4 text-ink" style={{ "--i": 1 }}>
+            <h1 className="reveal t-display mt-5 text-white" style={{ "--i": 1 }}>
               Computers that are checked, priced fairly, and ready to work.
             </h1>
-            <p className="reveal t-body measure mt-5" style={{ "--i": 2 }}>
+            <p className="reveal t-body measure mt-5 !text-white/62" style={{ "--i": 2 }}>
               {siteData.brand.tagline}. Walk in to our store, or message us and
               we&rsquo;ll tell you what&rsquo;s in stock today.
             </p>
@@ -49,7 +50,7 @@ function HomePage() {
                 href={siteData.brand.whatsappHref}
                 target="_blank"
                 rel="noreferrer"
-                className="btn-ok"
+                className="btn-glass"
               >
                 <MessageCircle size={17} />
                 Ask about stock
@@ -57,19 +58,17 @@ function HomePage() {
             </div>
 
             {categories.length > 0 && (
-              <div className="reveal mt-10 border-t border-line pt-6" style={{ "--i": 4 }}>
-                <p className="t-micro">In the catalog right now</p>
+              <div className="reveal mt-9 border-t border-white/10 pt-5" style={{ "--i": 4 }}>
+                <p className="t-micro !text-white/45">In the catalog right now</p>
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {categories.map((category) => (
                     <li key={category.name}>
                       <Link
                         to="/catalog"
-                        className="chip chip-quiet transition hover:border-signal-200 hover:text-signal-600"
+                        className="chip border border-white/14 bg-white/6 text-white/80 hover:border-white/30 hover:text-white"
                       >
                         {category.name}
-                        <span className="text-slate-light">
-                          {category.count}
-                        </span>
+                        <span className="text-white/45">{category.count}</span>
                       </Link>
                     </li>
                   ))}
@@ -82,10 +81,10 @@ function HomePage() {
           {lead && (
             <Link
               to={`/catalog/${lead.id}`}
-              className="card-interactive reveal block overflow-hidden"
+              className="card-interactive reveal block overflow-hidden !border-white/12 !bg-white/[0.05] backdrop-blur-sm"
               style={{ "--i": 2 }}
             >
-              <div className="sheen aspect-[4/3] overflow-hidden bg-paper">
+              <div className="sheen aspect-[4/3] overflow-hidden bg-white">
                 <img
                   src={lead.image}
                   alt=""
@@ -94,10 +93,12 @@ function HomePage() {
               </div>
               <div className="flex items-end justify-between gap-4 p-5">
                 <div className="min-w-0">
-                  <p className="t-micro">In stock now</p>
-                  <h2 className="t-card mt-1 text-ink">{lead.title}</h2>
+                  <p className="text-[13px] text-white/45">In stock now</p>
+                  <h2 className="t-card mt-1 text-white">{lead.title}</h2>
                 </div>
-                <span className="price shrink-0">{lead.price}</span>
+                <span className="price shrink-0 !text-[#ffb454]">
+                  {lead.price}
+                </span>
               </div>
             </Link>
           )}
@@ -113,9 +114,14 @@ function HomePage() {
 
         <div className="mt-8 grid gap-x-10 gap-y-9 sm:grid-cols-2 lg:grid-cols-4">
           {siteData.services.map((service, index) => (
-            <article key={service.title} data-reveal style={{ "--i": index }}>
+            <article
+              key={service.title}
+              data-reveal
+              style={{ "--i": index }}
+              className="card-interactive p-6"
+            >
               <h3 className="t-card text-ink">{service.title}</h3>
-              <p className="t-body mt-2 text-[0.9375rem]">
+              <p className="t-body mt-2.5 text-[0.9375rem]">
                 {service.description}
               </p>
             </article>
@@ -136,12 +142,12 @@ function HomePage() {
                 key={step}
                 data-reveal
                 style={{ "--i": index }}
-                className="border-t border-line pt-4"
+                className="card-interactive p-6"
               >
-                <span className="t-micro tabular-nums text-slate-light">
-                  Step {index + 1}
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-signal-50 font-display text-[13px] font-bold tabular-nums text-signal-600">
+                  {index + 1}
                 </span>
-                <p className="t-card mt-1.5 text-ink">{step}</p>
+                <p className="t-card mt-4 text-ink">{step}</p>
               </li>
             ))}
           </ol>
