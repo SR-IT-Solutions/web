@@ -15,6 +15,7 @@ const serviceImages = {
 };
 import { useCatalog } from "../../catalog/useCatelog";
 import FaqSection from "../components/FaqSection";
+import HeroCarousel from "../components/HeroCarousel";
 import ProductCarousel from "../../catalog/pages/ProductCarousel";
 
 function HomePage() {
@@ -29,7 +30,9 @@ function HomePage() {
     .sort((a, b) => b.count - a.count)
     .slice(0, 4);
 
-  const lead = catalog.find((item) => item.image) ?? null;
+  const withImages = catalog.filter((item) => item.image);
+  const featured = withImages.filter((item) => item.featured);
+  const heroProducts = (featured.length ? featured : withImages).slice(0, 5);
 
   return (
     <div ref={revealRef}>
@@ -43,15 +46,24 @@ function HomePage() {
               <span className="pulse-dot" aria-hidden="true" />
               Open in {siteData.brand.location}
             </p>
-            <h1 className="reveal t-display mt-5 text-white" style={{ "--i": 1 }}>
+            <h1
+              className="reveal t-display mt-5 text-white"
+              style={{ "--i": 1 }}
+            >
               Computers that are checked, priced fairly, and ready to work.
             </h1>
-            <p className="reveal t-body measure mt-5 text-white/62!" style={{ "--i": 2 }}>
+            <p
+              className="reveal t-body measure mt-5 text-white/62!"
+              style={{ "--i": 2 }}
+            >
               {siteData.brand.tagline}. Walk in to our store, or message us and
               we&rsquo;ll tell you what&rsquo;s in stock today.
             </p>
 
-            <div className="reveal mt-8 flex flex-wrap gap-3" style={{ "--i": 3 }}>
+            <div
+              className="reveal mt-8 flex flex-wrap gap-3"
+              style={{ "--i": 3 }}
+            >
               <Link to="/catalog" className="btn-primary">
                 Browse the catalog
                 <ArrowRight size={17} />
@@ -68,8 +80,13 @@ function HomePage() {
             </div>
 
             {categories.length > 1 && (
-              <div className="reveal mt-9 border-t border-white/10 pt-5" style={{ "--i": 4 }}>
-                <p className="t-micro text-white/45!">In the catalog right now</p>
+              <div
+                className="reveal mt-9 border-t border-white/10 pt-5"
+                style={{ "--i": 4 }}
+              >
+                <p className="t-micro text-white/45!">
+                  In the catalog right now
+                </p>
                 <ul className="mt-3 flex flex-wrap gap-2">
                   {categories.map((category) => (
                     <li key={category.name}>
@@ -86,31 +103,7 @@ function HomePage() {
             )}
           </div>
 
-          {}
-          {lead && (
-            <Link
-              to={`/catalog/${lead.id}`}
-              className="card-interactive reveal block overflow-hidden border-white/12! bg-white/5! backdrop-blur-sm"
-              style={{ "--i": 2 }}
-            >
-              <div className="sheen aspect-4/3 overflow-hidden bg-white p-6">
-                <img
-                  src={lead.image}
-                  alt=""
-                  className="zoom h-full w-full object-contain"
-                />
-              </div>
-              <div className="flex items-end justify-between gap-4 p-5">
-                <div className="min-w-0">
-                  <p className="text-[13px] text-white/45">In stock now</p>
-                  <h2 className="t-card mt-1 text-white">{lead.title}</h2>
-                </div>
-                <span className="price shrink-0 text-[#ffb454]!">
-                  {lead.price}
-                </span>
-              </div>
-            </Link>
-          )}
+          <HeroCarousel products={heroProducts} />
         </div>
       </section>
 

@@ -32,11 +32,7 @@ const parseList = (value) => {
   return [];
 };
 
-const parseFeatured = (value) => {
-  if (typeof value === "boolean") return value;
-  if (typeof value === "string") return value.trim().toLowerCase() === "true";
-  return false;
-};
+const parseFeatured = (value) => value === true;
 
 const formatPrice = (value) => {
   if (value == null || value === "") return "Custom quote";

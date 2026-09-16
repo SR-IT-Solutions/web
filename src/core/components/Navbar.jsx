@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import {
   House,
@@ -19,10 +20,31 @@ const navItems = [
 ];
 
 function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-line bg-surface/95 backdrop-blur-xl">
-        <div className="section-shell flex items-center justify-between gap-4 py-3">
+      <header
+        className={`sticky top-0 z-40 bg-surface/95 backdrop-blur-xl transition-all duration-300 ${
+          scrolled
+            ? "border-b border-line md:border-b-transparent md:bg-transparent md:pt-3 md:backdrop-blur-none"
+            : "border-b border-line"
+        }`}
+      >
+        <div
+          className={`section-shell flex items-center justify-between gap-4 py-3 transition-all duration-300 ${
+            scrolled
+              ? "md:rounded-full md:border md:border-line md:bg-surface/85 md:px-6 md:py-2.5 md:shadow-[0_8px_30px_rgba(20,18,14,0.10)] md:backdrop-blur-xl"
+              : "md:border md:border-transparent"
+          }`}
+        >
           <NavLink to="/" className="flex min-w-0 items-center gap-2.5">
             <img
               src={logoImg}

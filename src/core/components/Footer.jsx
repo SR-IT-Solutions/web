@@ -28,7 +28,7 @@ const channels = [
 function Footer() {
   return (
     <footer className="mt-16 border-t border-line bg-surface">
-      <div className="section-shell grid gap-10 py-12 md:grid-cols-[1.3fr_0.8fr_1.1fr]">
+      <div className="section-shell grid gap-8 py-9 sm:gap-10 sm:py-12 md:grid-cols-[1.3fr_0.8fr_1.1fr]">
         <div>
           <div className="mb-4 flex items-center gap-3">
             <img

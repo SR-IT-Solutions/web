@@ -86,7 +86,7 @@ function ProductCarousel() {
                 key={product.id}
                 className={`reveal flex flex-col ${
                   products.length > 3
-                    ? "w-[78vw] shrink-0 snap-start sm:w-[280px] lg:w-[calc((100%-3.75rem)/4)]"
+                    ? "w-[78vw] shrink-0 snap-start sm:w-70 lg:w-[calc((100%-3.75rem)/4)]"
                     : ""
                 }`}
                 style={{ "--i": index }}

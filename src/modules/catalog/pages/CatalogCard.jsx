@@ -31,8 +31,12 @@ export function CatalogCard({ item, viewMode = "grid" }) {
         </div>
 
         <div className="min-w-0 flex-1">
-          <h3 className="t-card text-ink">{item.title}</h3>
-          <p className="t-micro mt-1">{spec}</p>
+          <h3 className="t-card truncate text-ink" title={item.title}>
+            {item.title}
+          </h3>
+          <p className="t-micro mt-1 line-clamp-2" title={spec}>
+            {spec}
+          </p>
           <p className="t-micro mt-1 line-clamp-1 text-slate-light">
             {item.summary}
           </p>
@@ -64,10 +68,14 @@ export function CatalogCard({ item, viewMode = "grid" }) {
       </div>
 
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="t-card text-ink">{item.title}</h3>
-        <p className="t-micro mt-1.5">{spec}</p>
+        <h3 className="t-card truncate text-ink" title={item.title}>
+          {item.title}
+        </h3>
+        <p className="t-micro mt-1.5 line-clamp-2 min-h-[2.9em]" title={spec}>
+          {spec}
+        </p>
 
-        <div className="mt-4 flex items-end justify-between gap-3 border-t border-line-soft pt-3.5">
+        <div className="mt-auto flex items-end justify-between gap-3 border-t border-line-soft pt-3.5">
           <span className="price">{item.price}</span>
           {item.tag && <span className="chip chip-condition">{item.tag}</span>}
         </div>

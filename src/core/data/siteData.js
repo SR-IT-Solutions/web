@@ -2,6 +2,7 @@ export const CATEGORIES = [
   "Mini PCs",
   "Laptop",
   "Workstation",
+  "Computers",
   "CCTV",
   "Printers",
   "Accessories",

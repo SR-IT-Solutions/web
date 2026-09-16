@@ -48,7 +48,7 @@ function ProductDetailPage() {
 
   if (loading) {
     return (
-      <div className="section-shell py-16">
+      <div className="section-shell py-10 sm:py-16">
         <div className="card h-96 animate-pulse bg-line-soft" />
       </div>
     );
@@ -56,7 +56,7 @@ function ProductDetailPage() {
 
   if (error || !product) {
     return (
-      <div className="section-shell py-20 text-center">
+      <div className="section-shell py-12 text-center sm:py-20">
         <h1 className="t-section text-ink">Product not found</h1>
         <p className="t-body mx-auto mt-3 max-w-md">
           It may have been sold or removed from the catalog.

@@ -13,9 +13,7 @@ function CatalogPage() {
       return acc;
     }, {});
 
-    const known = [
-      ...new Set([...CATEGORIES, ...Object.keys(counts)]),
-    ];
+    const known = [...new Set([...CATEGORIES, ...Object.keys(counts)])];
 
     return [
       { name: "All", count: catalog.length },
@@ -39,7 +37,7 @@ function CatalogPage() {
         what&rsquo;s on the shelf today.
       </p>
 
-      <div className="hide-scrollbar scroll-fade -mx-1 mt-10 flex items-center gap-2 overflow-x-auto border-y border-line px-1 py-4 pr-10 lg:pr-1 lg:[mask-image:none]">
+      <div className="hide-scrollbar scroll-fade -mx-1 mt-10 flex items-center gap-2 overflow-x-auto border-y border-line px-1 py-4 pr-10 lg:pr-1 lg:mask-none">
         {categories.map(({ name, count }) => (
           <button
             key={name}
@@ -50,7 +48,7 @@ function CatalogPage() {
               selectedCategory === name
                 ? "border border-signal-600 bg-signal-600 text-white"
                 : count === 0
-                  ? "chip-quiet cursor-not-allowed !text-slate-light"
+                  ? "chip-quiet cursor-not-allowed text-slate-light!"
                   : "chip-quiet hover:border-signal-200 hover:text-signal-600"
             }`}
             aria-pressed={selectedCategory === name}
@@ -72,7 +70,7 @@ function CatalogPage() {
           ))}
         </div>
       ) : error || filteredCatalog.length === 0 ? (
-        <div className="mt-8 border-t border-line py-16 text-center">
+        <div className="mt-8 border-t border-line py-10 text-center sm:py-16">
           <p className="t-card text-ink">
             {error
               ? "The catalog didn't load"
