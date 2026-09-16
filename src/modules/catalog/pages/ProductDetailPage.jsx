@@ -27,7 +27,6 @@ function ProductDetailPage() {
 
   const product = catalog.find((item) => item.id === productId) ?? null;
 
-  // Only offer options the shop actually recorded for this product.
   const options = {
     processor: product?.supportedProcessors ?? [],
     ram: product?.supportedRams ?? [],
@@ -35,8 +34,6 @@ function ProductDetailPage() {
     condition: CONDITIONS,
   };
 
-  // Keyed on the id, not the product object: `catalog.find()` returns a new
-  // reference every render, which would re-fire this effect forever.
   useEffect(() => {
     const match = catalog.find((item) => item.id === productId);
     if (!match) return;

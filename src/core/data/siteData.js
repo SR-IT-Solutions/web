@@ -1,7 +1,3 @@
-/**
- * Categories the shop stocks. Must match the `category_enum` values in
- * Supabase and the admin panel's CATEGORY_OPTIONS, or saves are rejected.
- */
 export const CATEGORIES = [
   "Mini PCs",
   "Laptop",

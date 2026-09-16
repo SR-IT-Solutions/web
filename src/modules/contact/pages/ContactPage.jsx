@@ -10,10 +10,6 @@ function ContactPage() {
   const set = (key) => (event) =>
     setForm((current) => ({ ...current, [key]: event.target.value }));
 
-  /**
-   * Carries what the visitor typed into the WhatsApp message. The previous
-   * version collected these fields and then discarded them.
-   */
   const handleSubmit = (event) => {
     event.preventDefault();
 

@@ -21,7 +21,6 @@ function HomePage() {
   const { catalog } = useCatalog();
   const revealRef = useReveal();
 
-  // Categories that actually have stock, busiest first.
   const categories = [...new Set(catalog.map((item) => item.category))]
     .map((name) => ({
       name,
@@ -87,7 +86,7 @@ function HomePage() {
             )}
           </div>
 
-          {/* A real product, not a fabricated dashboard. */}
+          {}
           {lead && (
             <Link
               to={`/catalog/${lead.id}`}
@@ -156,7 +155,7 @@ function HomePage() {
             <h2 className="t-section text-ink">How buying from us works</h2>
           </div>
 
-          {/* Genuinely a sequence, so it is numbered. */}
+          {}
           <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {siteData.process.map((step, index) => (
               <li

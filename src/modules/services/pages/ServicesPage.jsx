@@ -50,8 +50,7 @@ function ServicesPage() {
               />
             </div>
             <div className="flex flex-1 flex-col p-5">
-              {/* Two lines reserved so every paragraph starts on the same
-                  baseline, whether the title wraps or not. */}
+              {}
               <h2 className="t-card min-h-[2.6em] text-ink">{title}</h2>
               <p className="t-body mt-1 text-pretty text-[0.9375rem]">{text}</p>
             </div>

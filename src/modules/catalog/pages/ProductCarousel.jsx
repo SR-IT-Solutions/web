@@ -69,8 +69,6 @@ function ProductCarousel() {
           products.length > 3
             ? undefined
             : {
-                // Match the track count to what we actually have, and cap the
-                // width so a single product doesn't stretch into a banner.
                 gridTemplateColumns: `repeat(${Math.min(products.length, 3)}, minmax(0, 360px))`,
               }
         }

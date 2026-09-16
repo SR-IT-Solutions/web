@@ -7,8 +7,6 @@ function CatalogPage() {
   const { catalog, loading, error } = useCatalog();
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // Every category the shop stocks, so the filter row is stable even when
-  // only some of them currently have products. Counts show what's live.
   const categories = useMemo(() => {
     const counts = catalog.reduce((acc, item) => {
       if (item.category) acc[item.category] = (acc[item.category] ?? 0) + 1;

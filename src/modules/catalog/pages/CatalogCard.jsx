@@ -1,10 +1,5 @@
 import { Link } from "react-router-dom";
 
-/**
- * Condenses the configuration arrays into the one line a buyer scans:
- * processor · RAM · storage. Falls back to the category when a product
- * has no configuration recorded yet.
- */
 function specLine(item) {
   const parts = [
     item.supportedProcessors?.[0],
