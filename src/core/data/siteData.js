@@ -3,6 +3,8 @@ export const CATEGORIES = [
   "Laptop",
   "Workstation",
   "Computers",
+  "Monitor",
+  "TV",
   "CCTV",
   "Printers",
   "Accessories",
