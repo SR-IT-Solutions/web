@@ -114,7 +114,7 @@ function ProductDetailPage() {
 
       <div className="mt-6 grid items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
-          <div className="card aspect-square max-h-[380px] overflow-hidden bg-white p-4 sm:max-h-none">
+          <div className="card aspect-square max-h-95 overflow-hidden bg-white p-4 sm:max-h-none">
             {images[activeImage] && (
               <img
                 src={images[activeImage]}
@@ -139,7 +139,12 @@ function ProductDetailPage() {
                   aria-label={`Image ${index + 1} of ${images.length}`}
                   aria-pressed={index === activeImage}
                 >
-                  <img src={src} alt="" className="h-full w-full object-cover" loading="lazy" />
+                  <img
+                    src={src}
+                    alt=""
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
                 </button>
               ))}
             </div>
