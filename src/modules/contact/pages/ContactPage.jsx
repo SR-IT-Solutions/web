@@ -7,7 +7,7 @@ const EMPTY = { name: "", contact: "", setup: "", requirements: "" };
 
 function ContactPage() {
   usePageMeta({
-    title: "Contact",
+    title: "Contact — Computer Shop in Arekere",
     description:
       "Visit or call SR IT Solutions in Arekere, Bengaluru for computer sales, repairs and enquiries. Phone, WhatsApp, and store address.",
     path: "/contact",

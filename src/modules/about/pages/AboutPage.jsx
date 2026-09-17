@@ -22,7 +22,7 @@ const values = [
 
 function AboutPage() {
   usePageMeta({
-    title: "About",
+    title: "About — Computer Store in Arekere",
     description:
       "SR IT Solutions is a computer hardware and repair store in Arekere, Bengaluru, selling tested new, used and refurbished systems.",
     path: "/about",

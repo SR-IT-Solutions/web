@@ -6,7 +6,7 @@ import { usePageMeta } from "../../../core/hooks/usePageMeta";
 
 function CatalogPage() {
   usePageMeta({
-    title: "Catalog",
+    title: "Refurbished Laptops & Desktops",
     description:
       "Browse refurbished and new laptops, desktops, mini PCs, workstations, printers, CCTV and accessories available at SR IT Solutions.",
     path: "/catalog",

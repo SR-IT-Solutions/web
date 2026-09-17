@@ -62,8 +62,10 @@ function HomePage() {
               className="reveal t-body measure mt-5 text-white/62!"
               style={{ "--i": 2 }}
             >
-              {siteData.brand.tagline}. Walk in to our store, or message us and
-              we&rsquo;ll tell you what&rsquo;s in stock today.
+              A computer shop in Arekere, Bengaluru for refurbished and used
+              laptops, desktops, accessories and repair services. Walk in to
+              our store, or message us and we&rsquo;ll tell you what&rsquo;s in
+              stock today.
             </p>
 
             <div

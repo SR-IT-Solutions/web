@@ -31,7 +31,7 @@ const serviceCards = [
 
 function ServicesPage() {
   usePageMeta({
-    title: "Services",
+    title: "Laptop Repair & Computer Services",
     description:
       "Laptop and desktop sales, computer repair, accessories, printers and CCTV setup for homes and businesses in Bengaluru.",
     path: "/services",
