@@ -1,32 +1,70 @@
 import { useState } from "react";
 import { MapPin, MessageCircle, Phone, Send } from "lucide-react";
 import { siteData } from "../../../core/data/siteData";
+import { usePageMeta } from "../../../core/hooks/usePageMeta";
 
 const EMPTY = { name: "", contact: "", setup: "", requirements: "" };
 
 function ContactPage() {
+  usePageMeta({
+    title: "Contact",
+    description:
+      "Visit or call SR IT Solutions in Arekere, Bengaluru for computer sales, repairs and enquiries. Phone, WhatsApp, and store address.",
+    path: "/contact",
+  });
   const [form, setForm] = useState(EMPTY);
+  const [status, setStatus] = useState(null);
 
-  const set = (key) => (event) =>
+  const set = (key) => (event) => {
     setForm((current) => ({ ...current, [key]: event.target.value }));
+    setStatus(null);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const name = form.name.trim();
+    const contact = form.contact.trim();
+
+    if (!name) {
+      setStatus({
+        type: "error",
+        message: "Please add your name so we know who we're talking to.",
+      });
+      return;
+    }
+
+    if (!/^[0-9+\s-]{10,15}$/.test(contact)) {
+      setStatus({
+        type: "error",
+        message: "Please add a phone number we can reach you on (10 digits).",
+      });
+      return;
+    }
+
     const lines = [
       "Hello SR IT Solutions, I'd like to enquire.",
-      form.name && `Name: ${form.name}`,
-      form.contact && `Contact: ${form.contact}`,
-      form.setup && `Setup: ${form.setup}`,
-      form.requirements && `Looking for: ${form.requirements}`,
+      `Name: ${name}`,
+      `Contact: ${contact}`,
+      form.setup.trim() && `Setup: ${form.setup.trim()}`,
+      form.requirements.trim() && `Looking for: ${form.requirements.trim()}`,
     ].filter(Boolean);
 
     const base = siteData.brand.whatsappHref.split("?")[0];
-    window.open(
+    const opened = window.open(
       `${base}?text=${encodeURIComponent(lines.join("\n"))}`,
       "_blank",
       "noopener,noreferrer",
     );
+
+    if (opened) {
+      setStatus({ type: "ok", message: "Opening WhatsApp with your enquiry." });
+    } else {
+      setStatus({
+        type: "error",
+        message: `Your browser blocked the WhatsApp window. Call us on ${siteData.brand.phone} instead.`,
+      });
+    }
   };
 
   const field =
@@ -118,6 +156,8 @@ function ContactPage() {
               <span className="t-micro mb-1.5 block text-ink">Name</span>
               <input
                 type="text"
+                name="name"
+                autoComplete="name"
                 placeholder="Your name"
                 className={field}
                 value={form.name}
@@ -130,6 +170,9 @@ function ContactPage() {
               </span>
               <input
                 type="tel"
+                name="tel"
+                autoComplete="tel"
+                inputMode="numeric"
                 placeholder="10-digit mobile number"
                 className={field}
                 value={form.contact}
@@ -168,6 +211,14 @@ function ContactPage() {
             <Send size={16} />
             Send on WhatsApp
           </button>
+
+          <p
+            role="status"
+            aria-live="polite"
+            className={`t-micro mt-3 ${status?.type === "error" ? "text-signal-600" : "text-ok"}`}
+          >
+            {status?.message ?? ""}
+          </p>
         </form>
       </div>
     </div>

@@ -22,7 +22,7 @@ export function CatalogCard({ item, viewMode = "grid" }) {
           {item.image && (
             <img
               src={item.image}
-              alt=""
+              alt={item.title}
               className="zoom h-full w-full object-cover"
               loading="lazy"
               decoding="async"
@@ -59,7 +59,7 @@ export function CatalogCard({ item, viewMode = "grid" }) {
         {item.image && (
           <img
             src={item.image}
-            alt=""
+            alt={item.title}
             className="zoom h-full w-full object-cover"
             loading="lazy"
             decoding="async"

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const ROTATE_MS = 5000;
@@ -7,15 +7,22 @@ const ROTATE_MS = 5000;
 function HeroCarousel({ products }) {
   const [rawIndex, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
-  const reducedRef = useRef(false);
+  const [stopped, setStopped] = useState(false);
+  const [reduced, setReduced] = useState(() =>
+    typeof window === "undefined"
+      ? false
+      : window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
 
   const count = products.length;
   const index = count ? rawIndex % count : 0;
 
   useEffect(() => {
-    reducedRef.current = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setReduced(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
   }, []);
 
   const go = useCallback(
@@ -24,13 +31,13 @@ function HeroCarousel({ products }) {
   );
 
   useEffect(() => {
-    if (count < 2 || paused || reducedRef.current) return;
+    if (count < 2 || paused || stopped || reduced) return;
     const timer = setInterval(
       () => setIndex((i) => (i + 1) % count),
       ROTATE_MS,
     );
     return () => clearInterval(timer);
-  }, [count, paused]);
+  }, [count, paused, stopped, reduced]);
 
   const touchStart = useRef(null);
 
@@ -61,11 +68,7 @@ function HeroCarousel({ products }) {
       onFocusCapture={() => setPaused(true)}
       onBlurCapture={() => setPaused(false)}
     >
-      <div
-        className="grid"
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-      >
+      <div className="grid" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         {products.map((product, i) => (
           <Link
             key={product.id}
@@ -80,7 +83,7 @@ function HeroCarousel({ products }) {
             <div className="sheen aspect-4/3 overflow-hidden bg-white p-4 sm:aspect-16/11 sm:p-6">
               <img
                 src={product.image}
-                alt=""
+                alt={product.title}
                 loading={i === 0 ? "eager" : "lazy"}
                 className="zoom h-full w-full object-contain"
               />
@@ -88,9 +91,9 @@ function HeroCarousel({ products }) {
             <div className="flex items-end justify-between gap-4 p-5">
               <div className="min-w-0">
                 <p className="text-[13px] text-white/45">In stock now</p>
-                <h2 className="t-card mt-1 truncate text-white">
+                <p className="t-card mt-1 truncate text-white">
                   {product.title}
-                </h2>
+                </p>
               </div>
               <span className="price shrink-0 text-[#ffb454]!">
                 {product.price}
@@ -106,9 +109,20 @@ function HeroCarousel({ products }) {
             type="button"
             onClick={() => go(index - 1)}
             aria-label="Previous product"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/16 text-white/70 transition hover:border-white/35 hover:text-white"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/16 text-white/70 transition hover:border-white/35 hover:text-white"
           >
             <ArrowLeft size={16} />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setStopped((s) => !s)}
+            aria-label={
+              stopped ? "Resume automatic rotation" : "Pause automatic rotation"
+            }
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/16 text-white/70 transition hover:border-white/35 hover:text-white"
+          >
+            {stopped ? <Play size={15} /> : <Pause size={15} />}
           </button>
 
           <div className="flex items-center gap-2">
@@ -118,8 +132,8 @@ function HeroCarousel({ products }) {
                 type="button"
                 onClick={() => go(i)}
                 aria-label={`Show ${product.title}`}
-                aria-current={i === index}
-                className="flex h-8 items-center px-0.5"
+                aria-current={i === index ? "true" : undefined}
+                className="flex h-11 items-center px-1"
               >
                 <span
                   className={`block h-1.5 rounded-full transition-all ${
@@ -136,7 +150,7 @@ function HeroCarousel({ products }) {
             type="button"
             onClick={() => go(index + 1)}
             aria-label="Next product"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/16 text-white/70 transition hover:border-white/35 hover:text-white"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/16 text-white/70 transition hover:border-white/35 hover:text-white"
           >
             <ArrowRight size={16} />
           </button>
