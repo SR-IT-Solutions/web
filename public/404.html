@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SR IT Solutions</title>
+    <script>
+      sessionStorage.setItem(
+        "redirectPath",
+        window.location.pathname +
+          window.location.search +
+          window.location.hash,
+      );
+      window.location.replace("/");
+    </script>
+  </head>
+  <body></body>
+</html>

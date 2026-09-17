@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -33,9 +32,11 @@
       content="Refurbished laptops, desktops, computer hardware, and repair services in Arekere, Bengaluru."
     />
 
-    <!-- Open Graph / WhatsApp / Facebook Link Previews -->
+    <link rel="canonical" href="https://sritsolutionz.com/" />
+
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://sr-it-solutions.github.io/web/" />
+    <meta property="og:site_name" content="SR IT Solutions" />
+    <meta property="og:url" content="https://sritsolutionz.com/" />
     <meta
       property="og:title"
       content="SR IT Solutions | Computer Hardware & Repair"
@@ -44,15 +45,71 @@
       property="og:description"
       content="Refurbished laptops, desktops, computer hardware, and repair services in Arekere, Bengaluru."
     />
-    <!-- Use a full absolute URL for the preview image -->
     <meta
       property="og:image"
-      content="https://sr-it-solutions.github.io/web/sr-it-solution-logo.png"
+      content="https://sritsolutionz.com/sr-it-solution-logo.png"
     />
 
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="SR IT Solutions | Computer Hardware & Repair"
+    />
+    <meta
+      name="twitter:description"
+      content="Refurbished laptops, desktops, computer hardware, and repair services in Arekere, Bengaluru."
+    />
+    <meta
+      name="twitter:image"
+      content="https://sritsolutionz.com/sr-it-solution-logo.png"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "SR IT Solutions",
+        "description": "Refurbished and used laptops, desktops, accessories, and computer repair services",
+        "url": "https://sritsolutionz.com/",
+        "image": "https://sritsolutionz.com/sr-it-solution-logo.png",
+        "telephone": "+919620777844",
+        "email": "sritsolutions2333@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "863, BTS Layout Main Rd, Jai Maruthi Layout, Venugopal Reddy Layout, Arekere",
+          "addressLocality": "Bengaluru",
+          "addressRegion": "Karnataka",
+          "postalCode": "560076",
+          "addressCountry": "IN"
+        },
+        "sameAs": [
+          "https://www.instagram.com/sritlaptops",
+          "https://www.facebook.com/marketplace/profile/100056373639598/",
+          "https://www.olx.in/profile/483067533"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      (function () {
+        var stashed = sessionStorage.getItem("redirectPath");
+        if (stashed) {
+          sessionStorage.removeItem("redirectPath");
+          if (stashed !== window.location.pathname) {
+            window.history.replaceState(null, "", stashed);
+          }
+        }
+        if (window.location.hash.indexOf("#/") === 0) {
+          window.history.replaceState(
+            null,
+            "",
+            window.location.hash.slice(1) || "/",
+          );
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
