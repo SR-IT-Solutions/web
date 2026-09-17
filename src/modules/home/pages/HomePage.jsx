@@ -13,12 +13,18 @@ const serviceImages = {
   refurbished: refurbishedImg,
   accessories: accessoriesImg,
 };
-import { useCatalog } from "../../catalog/useCatelog";
+import { useCatalog } from "../../catalog/useCatalog";
 import FaqSection from "../components/FaqSection";
 import HeroCarousel from "../components/HeroCarousel";
 import ProductCarousel from "../../catalog/pages/ProductCarousel";
+import { usePageMeta } from "../../../core/hooks/usePageMeta";
 
 function HomePage() {
+  usePageMeta({
+    description:
+      "Refurbished and used laptops, desktops, computer accessories and repair services in Arekere, Bengaluru. New and certified refurbished stock, tested before sale.",
+    path: "/",
+  });
   const { catalog } = useCatalog();
   const revealRef = useReveal();
 

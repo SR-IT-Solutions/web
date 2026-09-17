@@ -1,5 +1,6 @@
 import { ShieldCheck, Wrench, Target } from "lucide-react";
 import { siteData } from "../../../core/data/siteData";
+import { usePageMeta } from "../../../core/hooks/usePageMeta";
 
 const values = [
   {
@@ -20,6 +21,12 @@ const values = [
 ];
 
 function AboutPage() {
+  usePageMeta({
+    title: "About",
+    description:
+      "SR IT Solutions is a computer hardware and repair store in Arekere, Bengaluru, selling tested new, used and refurbished systems.",
+    path: "/about",
+  });
   return (
     <div className="section-shell py-12 sm:py-16">
       <h1 className="t-display text-ink">About the store</h1>

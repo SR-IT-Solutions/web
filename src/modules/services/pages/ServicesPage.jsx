@@ -4,6 +4,7 @@ import desktopsImg from "../../../assets/services/desktops.jpg";
 import accessoriesImg from "../../../assets/services/accessories.jpg";
 import repairsImg from "../../../assets/services/repairs.jpg";
 import businessImg from "../../../assets/services/business.jpg";
+import { usePageMeta } from "../../../core/hooks/usePageMeta";
 
 const serviceCards = [
   {
@@ -29,6 +30,12 @@ const serviceCards = [
 ];
 
 function ServicesPage() {
+  usePageMeta({
+    title: "Services",
+    description:
+      "Laptop and desktop sales, computer repair, accessories, printers and CCTV setup for homes and businesses in Bengaluru.",
+    path: "/services",
+  });
   return (
     <div className="section-shell py-12 sm:py-16">
       <h1 className="t-display text-ink">Services</h1>

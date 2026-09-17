@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useCatalog } from "../useCatelog";
+import { useCatalog } from "../useCatalog";
 import CatalogCard from "./CatalogCard";
 
 function ProductCarousel() {

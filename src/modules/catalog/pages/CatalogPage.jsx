@@ -1,11 +1,26 @@
-import { useMemo, useState } from "react";
-import { useCatalog } from "../useCatelog";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useCatalog } from "../useCatalog";
 import { CATEGORIES } from "../../../core/data/siteData";
 import CatalogCard from "./CatalogCard";
+import { usePageMeta } from "../../../core/hooks/usePageMeta";
 
 function CatalogPage() {
+  usePageMeta({
+    title: "Catalog",
+    description:
+      "Browse refurbished and new laptops, desktops, mini PCs, workstations, printers, CCTV and accessories available at SR IT Solutions.",
+    path: "/catalog",
+  });
   const { catalog, loading, error } = useCatalog();
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const filterRowRef = useRef(null);
+  const pendingScrollRef = useRef(false);
+
+  const selectCategory = (name) => {
+    if (name === selectedCategory) return;
+    setSelectedCategory(name);
+    pendingScrollRef.current = true;
+  };
 
   const categories = useMemo(() => {
     const counts = catalog.reduce((acc, item) => {
@@ -20,6 +35,13 @@ function CatalogPage() {
       ...known.map((name) => ({ name, count: counts[name] ?? 0 })),
     ];
   }, [catalog]);
+
+  useLayoutEffect(() => {
+    if (!pendingScrollRef.current) return;
+    pendingScrollRef.current = false;
+    const top = filterRowRef.current?.getBoundingClientRect().top ?? 0;
+    if (top < 0) window.scrollBy({ top, left: 0, behavior: "instant" });
+  }, [selectedCategory]);
 
   const filteredCatalog = useMemo(
     () =>
@@ -37,14 +59,17 @@ function CatalogPage() {
         what&rsquo;s on the shelf today.
       </p>
 
-      <div className="hide-scrollbar scroll-fade -mx-1 mt-10 flex items-center gap-2 overflow-x-auto border-y border-line px-1 py-4 pr-10 lg:pr-1 lg:mask-none">
+      <div
+        ref={filterRowRef}
+        className="hide-scrollbar scroll-fade -mx-1 mt-10 flex items-center gap-2 overflow-x-auto border-y border-line px-1 py-4 pr-10 lg:pr-1 lg:mask-none"
+      >
         {categories.map(({ name, count }) => (
           <button
             key={name}
             type="button"
-            onClick={() => setSelectedCategory(name)}
+            onClick={() => selectCategory(name)}
             disabled={count === 0}
-            className={`chip min-h-9 shrink-0 px-3.5 ${
+            className={`chip min-h-11 shrink-0 px-3.5 ${
               selectedCategory === name
                 ? "border border-signal-600 bg-signal-600 text-white"
                 : count === 0
@@ -60,7 +85,7 @@ function CatalogPage() {
       </div>
 
       {loading ? (
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
@@ -89,11 +114,11 @@ function CatalogPage() {
         </div>
       ) : (
         <>
-          <p className="t-micro mt-6">
+          <p className="t-micro mt-6" role="status" aria-live="polite">
             {filteredCatalog.length}{" "}
             {filteredCatalog.length === 1 ? "product" : "products"}
           </p>
-          <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredCatalog.map((item, index) => (
               <div key={item.id} className="reveal" style={{ "--i": index }}>
                 <CatalogCard item={item} />

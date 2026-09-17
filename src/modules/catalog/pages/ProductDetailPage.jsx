@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, MessageCircle } from "lucide-react";
-import { useCatalog } from "../useCatelog";
+import { useCatalog } from "../useCatalog";
 import { siteData } from "../../../core/data/siteData";
+import { usePageMeta } from "../../../core/hooks/usePageMeta";
 
 const CONDITIONS = ["New", "Refurbished", "Used"];
 
@@ -46,6 +47,14 @@ function ProductDetailPage() {
     });
   }, [productId, catalog]);
 
+  usePageMeta({
+    title: product ? `${product.title} — ${product.category}` : "Catalog",
+    description: product
+      ? `${product.summary} Available at SR IT Solutions, Arekere, Bengaluru. ${product.price}.`
+      : "Browse laptops, desktops and computer hardware at SR IT Solutions.",
+    path: `/catalog/${productId}`,
+  });
+
   if (loading) {
     return (
       <div className="section-shell py-10 sm:py-16">
@@ -57,10 +66,15 @@ function ProductDetailPage() {
   if (error || !product) {
     return (
       <div className="section-shell py-12 text-center sm:py-20">
-        <h1 className="t-section text-ink">Product not found</h1>
+        <h1 className="t-section text-ink">
+          {error ? "The catalog didn't load" : "Product not found"}
+        </h1>
         <p className="t-body mx-auto mt-3 max-w-md">
-          It may have been sold or removed from the catalog.
+          {error
+            ? "Refresh the page, or message us on WhatsApp and we'll tell you what's in stock."
+            : "It may have been sold or removed from the catalog."}
         </p>
+        {error && <p className="t-micro mt-3 text-slate-light">{error}</p>}
         <Link to="/catalog" className="btn-primary mt-6">
           <ArrowLeft size={16} />
           Back to catalog
@@ -159,7 +173,7 @@ function ProductDetailPage() {
                         onClick={() =>
                           setConfig((current) => ({ ...current, [key]: value }))
                         }
-                        className={`chip min-h-9 px-3.5 transition ${
+                        className={`chip min-h-11 px-3.5 transition ${
                           config[key] === value
                             ? "border border-signal-600 bg-signal-600 font-semibold text-white"
                             : "chip-quiet hover:border-slate-light"
