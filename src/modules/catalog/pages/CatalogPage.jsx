@@ -85,7 +85,7 @@ function CatalogPage() {
       </div>
 
       {loading ? (
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
@@ -118,7 +118,7 @@ function CatalogPage() {
             {filteredCatalog.length}{" "}
             {filteredCatalog.length === 1 ? "product" : "products"}
           </p>
-          <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredCatalog.map((item, index) => (
               <div key={item.id} className="reveal" style={{ "--i": index }}>
                 <CatalogCard item={item} />
