@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import { Link } from "react-router-dom";
+import { cloudinaryImage, cloudinarySrcSet } from "../../../core/utils/cloudinary";
 
 const ROTATE_MS = 5000;
 
@@ -76,15 +77,19 @@ function HeroCarousel({ products }) {
             aria-hidden={i === index ? undefined : true}
             tabIndex={i === index ? undefined : -1}
             style={{ gridArea: "1 / 1" }}
-            className={`card-interactive block overflow-hidden border-white/12! bg-white/5! backdrop-blur-sm transition-opacity duration-500 ${
+            className={`card-interactive block overflow-hidden border-white/12! bg-white/5! transition-opacity duration-500 ${
               i === index ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
           >
             <div className="sheen aspect-4/3 overflow-hidden bg-white p-4 sm:aspect-16/11 sm:p-6">
               <img
-                src={product.image}
+                src={cloudinaryImage(product.image, 900)}
+                srcSet={cloudinarySrcSet(product.image, [600, 900, 1200])}
+                sizes="(min-width: 1024px) 600px, 100vw"
                 alt={product.title}
                 loading={i === 0 ? "eager" : "lazy"}
+                fetchPriority={i === 0 ? "high" : undefined}
+                decoding="async"
                 className="zoom h-full w-full object-contain"
               />
             </div>

@@ -32,14 +32,14 @@ function Navbar() {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 bg-surface/95 backdrop-blur-xl transition-all duration-300 ${
+        className={`sticky top-0 z-40 bg-surface transition-[background-color,border-color,padding] duration-300 ${
           scrolled
-            ? "border-b border-line md:border-b-transparent md:bg-transparent md:pt-3 md:backdrop-blur-none"
+            ? "border-b border-line md:border-b-transparent md:bg-transparent md:pt-3"
             : "border-b border-line"
         }`}
       >
         <div
-          className={`section-shell flex items-center justify-between gap-4 py-3 transition-all duration-300 ${
+          className={`section-shell flex items-center justify-between gap-4 py-3 transition-[padding,background-color,border-color,box-shadow,border-radius] duration-300 ${
             scrolled
               ? "md:rounded-full md:border md:border-line md:bg-surface/85 md:px-6 md:py-2.5 md:shadow-[0_8px_30px_rgba(20,18,14,0.10)] md:backdrop-blur-xl"
               : "md:border md:border-transparent"

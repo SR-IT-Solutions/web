@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, MessageCircle } from "lucide-react";
 import { useCatalog } from "../useCatalog";
 import { siteData } from "../../../core/data/siteData";
 import { usePageMeta } from "../../../core/hooks/usePageMeta";
+import { cloudinaryImage, cloudinarySrcSet } from "../../../core/utils/cloudinary";
 
 const CONDITIONS = ["New", "Refurbished", "Used"];
+const DETAIL_WIDTHS = [600, 1000, 1400];
+const DETAIL_SIZES = "(min-width: 1024px) 640px, 100vw";
 
 const CONFIG_LABELS = {
   processor: "Processor",
@@ -27,6 +30,28 @@ function ProductDetailPage() {
   });
 
   const product = catalog.find((item) => item.id === productId) ?? null;
+
+  const images = useMemo(
+    () =>
+      product?.images?.length
+        ? product.images
+        : product?.image
+          ? [product.image]
+          : [],
+    [product],
+  );
+
+  useEffect(() => {
+    if (images.length < 2) return;
+    const warm = images.slice(1).map((src) => {
+      const img = new Image();
+      img.sizes = DETAIL_SIZES;
+      img.srcset = cloudinarySrcSet(src, DETAIL_WIDTHS) ?? "";
+      img.src = cloudinaryImage(src, 1000);
+      return img;
+    });
+    return () => warm.forEach((img) => (img.src = ""));
+  }, [images]);
 
   const options = {
     processor: product?.supportedProcessors ?? [],
@@ -83,12 +108,6 @@ function ProductDetailPage() {
     );
   }
 
-  const images = product.images?.length
-    ? product.images
-    : product.image
-      ? [product.image]
-      : [];
-
   const enquiry = [
     `Hello SR IT Solutions, I'd like to enquire about ${product.title}.`,
     config.processor && `Processor: ${config.processor}`,
@@ -114,11 +133,15 @@ function ProductDetailPage() {
 
       <div className="mt-6 grid items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
-          <div className="card aspect-square max-h-95 overflow-hidden bg-white p-4 sm:max-h-none">
+          <div className="card aspect-square max-h-95 overflow-hidden bg-white sm:max-h-none">
             {images[activeImage] && (
               <img
-                src={images[activeImage]}
+                src={cloudinaryImage(images[activeImage], 1000)}
+                srcSet={cloudinarySrcSet(images[activeImage], DETAIL_WIDTHS)}
+                sizes={DETAIL_SIZES}
                 alt={product.title}
+                fetchPriority="high"
+                decoding="async"
                 className="h-full w-full object-contain"
               />
             )}
@@ -140,10 +163,13 @@ function ProductDetailPage() {
                   aria-pressed={index === activeImage}
                 >
                   <img
-                    src={src}
+                    src={cloudinaryImage(src, 160)}
+                    srcSet={cloudinarySrcSet(src, [160, 240])}
+                    sizes="80px"
                     alt=""
                     className="h-full w-full object-cover"
                     loading="lazy"
+                    decoding="async"
                   />
                 </button>
               ))}

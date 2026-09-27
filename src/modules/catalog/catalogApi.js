@@ -80,6 +80,13 @@ const normalizeRow = (row) => {
   };
 };
 
+export function getCachedCatalog() {
+  if (catalogCache && Date.now() - catalogCacheTimestamp < CATALOG_CACHE_TTL) {
+    return catalogCache;
+  }
+  return null;
+}
+
 export async function fetchCatalog({ forceRefresh = false } = {}) {
   if (forceRefresh) {
     catalogCache = null;

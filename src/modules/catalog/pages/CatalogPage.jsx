@@ -1,8 +1,14 @@
 import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { Grid2x2, Rows2 } from "lucide-react";
 import { useCatalog } from "../useCatalog";
 import { CATEGORIES } from "../../../core/data/siteData";
 import CatalogCard from "./CatalogCard";
 import { usePageMeta } from "../../../core/hooks/usePageMeta";
+
+const VIEW_OPTIONS = [
+  { columns: 2, label: "Two products per row", Icon: Grid2x2 },
+  { columns: 1, label: "One product per row", Icon: Rows2 },
+];
 
 function CatalogPage() {
   usePageMeta({
@@ -13,6 +19,7 @@ function CatalogPage() {
   });
   const { catalog, loading, error } = useCatalog();
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [mobileColumns, setMobileColumns] = useState(2);
   const filterRowRef = useRef(null);
   const pendingScrollRef = useRef(false);
 
@@ -114,14 +121,42 @@ function CatalogPage() {
         </div>
       ) : (
         <>
-          <p className="t-micro mt-6" role="status" aria-live="polite">
-            {filteredCatalog.length}{" "}
-            {filteredCatalog.length === 1 ? "product" : "products"}
-          </p>
-          <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="mt-6 flex items-center justify-between gap-4">
+            <p className="t-micro" role="status" aria-live="polite">
+              {filteredCatalog.length}{" "}
+              {filteredCatalog.length === 1 ? "product" : "products"}
+            </p>
+            <div
+              className="flex items-center gap-1 rounded-lg border border-line p-0.5 sm:hidden"
+              role="group"
+              aria-label="Products per row"
+            >
+              {VIEW_OPTIONS.map(({ columns, label, Icon }) => (
+                <button
+                  key={columns}
+                  type="button"
+                  onClick={() => setMobileColumns(columns)}
+                  className={`inline-flex h-9 w-9 items-center justify-center rounded-md transition ${
+                    mobileColumns === columns
+                      ? "bg-signal-600 text-white"
+                      : "text-slate hover:text-ink"
+                  }`}
+                  aria-label={label}
+                  aria-pressed={mobileColumns === columns}
+                >
+                  <Icon size={17} />
+                </button>
+              ))}
+            </div>
+          </div>
+          <div
+            className={`mt-4 grid sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4 ${
+              mobileColumns === 2 ? "grid-cols-2 gap-3" : "grid-cols-1 gap-5"
+            }`}
+          >
             {filteredCatalog.map((item, index) => (
               <div key={item.id} className="reveal" style={{ "--i": index }}>
-                <CatalogCard item={item} />
+                <CatalogCard item={item} compact={mobileColumns === 2} />
               </div>
             ))}
           </div>

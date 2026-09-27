@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { fetchCatalog } from "./catalogApi";
+import { fetchCatalog, getCachedCatalog } from "./catalogApi";
 
 export function useCatalog() {
-  const [catalog, setCatalog] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [catalog, setCatalog] = useState(() => getCachedCatalog() ?? []);
+  const [loading, setLoading] = useState(() => getCachedCatalog() === null);
   const [error, setError] = useState(null);
   const isMountedRef = useRef(true);
 
@@ -15,6 +15,13 @@ export function useCatalog() {
   }, []);
 
   const loadCatalog = useCallback(async (forceRefresh = false) => {
+    const cached = forceRefresh ? null : getCachedCatalog();
+    if (cached) {
+      setCatalog(cached);
+      setLoading(false);
+      setError(null);
+      return;
+    }
     setLoading(true);
     setError(null);
 
