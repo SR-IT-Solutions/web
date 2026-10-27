@@ -5,7 +5,7 @@ import { siteData } from "../data/siteData";
 import logoImg from "../../assets/logo.png";
 
 const quickLinks = [
-  { to: "/catalog", label: "Product catalog" },
+  { to: "/catalog/", label: "Product catalog" },
   { to: "/services", label: "Services & repairs" },
   { to: "/about", label: "About us" },
   { to: "/contact", label: "Contact & store location" },

@@ -1,7 +1,16 @@
 import { useEffect } from "react";
 
-const SITE_URL = "https://sritsolutionz.com";
+export const SITE_URL = "https://sritsolutionz.com";
 const SUFFIX = "SR IT Solutions";
+
+export const fullPageTitle = (title) => (title ? `${title} | ${SUFFIX}` : SUFFIX);
+
+// The build-time prerender sets a sink so the page's meta can be written into
+// the static HTML; effects never run there.
+let ssrSink = null;
+export const setPageMetaSink = (sink) => {
+  ssrSink = sink;
+};
 
 const setMeta = (selector, attr, name, content) => {
   let el = document.head.querySelector(selector);
@@ -13,9 +22,11 @@ const setMeta = (selector, attr, name, content) => {
   el.setAttribute("content", content);
 };
 
-export function usePageMeta({ title, description, path }) {
+export function usePageMeta({ title, description, path, noindex = false }) {
+  if (ssrSink) Object.assign(ssrSink, { title, description, path, noindex });
+
   useEffect(() => {
-    const fullTitle = title ? `${title} | ${SUFFIX}` : SUFFIX;
+    const fullTitle = fullPageTitle(title);
     const url = `${SITE_URL}${path ?? window.location.pathname}`;
 
     document.title = fullTitle;
@@ -30,6 +41,10 @@ export function usePageMeta({ title, description, path }) {
     setMeta('meta[name="twitter:title"]', "name", "twitter:title", fullTitle);
     setMeta('meta[property="og:url"]', "property", "og:url", url);
 
+    const robots = document.head.querySelector('meta[name="robots"]');
+    if (noindex) setMeta('meta[name="robots"]', "name", "robots", "noindex");
+    else robots?.remove();
+
     let canonical = document.head.querySelector('link[rel="canonical"]');
     if (!canonical) {
       canonical = document.createElement("link");
@@ -37,5 +52,5 @@ export function usePageMeta({ title, description, path }) {
       document.head.appendChild(canonical);
     }
     canonical.setAttribute("href", url);
-  }, [title, description, path]);
+  }, [title, description, path, noindex]);
 }

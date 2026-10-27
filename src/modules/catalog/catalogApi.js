@@ -34,6 +34,11 @@ const parseList = (value) => {
 
 const parseFeatured = (value) => value === true;
 
+const parsePrice = (value) => {
+  const numeric = typeof value === "number" ? value : Number(String(value ?? "").trim());
+  return value !== "" && value != null && Number.isFinite(numeric) ? numeric : null;
+};
+
 const formatPrice = (value) => {
   if (value == null || value === "") return "Custom quote";
   const numeric = typeof value === "number" ? value : Number(String(value).trim());
@@ -71,6 +76,7 @@ const normalizeRow = (row) => {
       "Tailored solution for your business.",
     tag: String(row.Tag ?? "").trim() || "Popular",
     price: formatPrice(row.Price),
+    priceValue: parsePrice(row.Price),
     featured: parseFeatured(row.Featured),
     image: images[0] ?? "",
     images,
@@ -79,6 +85,12 @@ const normalizeRow = (row) => {
     supportedStorage: parseList(row["Supported Storage"]),
   };
 };
+
+// Lets the build-time prerender render catalog pages from data it already fetched.
+export function primeCatalogCache(catalog) {
+  catalogCache = catalog;
+  catalogCacheTimestamp = Date.now();
+}
 
 export function getCachedCatalog() {
   if (catalogCache && Date.now() - catalogCacheTimestamp < CATALOG_CACHE_TTL) {

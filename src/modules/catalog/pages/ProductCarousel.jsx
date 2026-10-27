@@ -33,7 +33,7 @@ function ProductCarousel() {
           className={`flex items-center gap-2 ${products.length > 3 ? "" : "sm:[&>button]:hidden"}`}
         >
           <Link
-            to="/catalog"
+            to="/catalog/"
             className="hidden text-[15px] font-medium text-signal-600 transition hover:text-signal-700 sm:inline-flex sm:min-h-11 sm:items-center sm:gap-1.5"
           >
             See all
@@ -97,7 +97,7 @@ function ProductCarousel() {
       </div>
 
       <Link
-        to="/catalog"
+        to="/catalog/"
         className="mt-4 inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-signal-600 sm:hidden"
       >
         See all products

@@ -13,7 +13,7 @@ import logoImg from "../../assets/logo.png";
 
 const navItems = [
   { label: "Home", to: "/", icon: House },
-  { label: "Catalog", to: "/catalog", icon: Package },
+  { label: "Catalog", to: "/catalog/", icon: Package },
   { label: "Services", to: "/services", icon: Laptop },
   { label: "About", to: "/about", icon: Info },
   { label: "Contact", to: "/contact", icon: MessageCircle },

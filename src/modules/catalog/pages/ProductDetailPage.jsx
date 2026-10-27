@@ -100,7 +100,7 @@ function ProductDetailPage() {
             : "It may have been sold or removed from the catalog."}
         </p>
         {error && <p className="t-micro mt-3 text-slate-light">{error}</p>}
-        <Link to="/catalog" className="btn-primary mt-6">
+        <Link to="/catalog/" className="btn-primary mt-6">
           <ArrowLeft size={16} />
           Back to catalog
         </Link>
@@ -124,7 +124,7 @@ function ProductDetailPage() {
   return (
     <div className="section-shell py-10 sm:py-14">
       <Link
-        to="/catalog"
+        to="/catalog/"
         className="inline-flex min-h-11 items-center gap-1.5 text-[15px] font-medium text-signal-600 transition hover:text-signal-700"
       >
         <ArrowLeft size={16} />

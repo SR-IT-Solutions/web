@@ -15,7 +15,7 @@ function CatalogPage() {
     title: "Refurbished Laptops & Desktops",
     description:
       "Browse refurbished and new laptops, desktops, mini PCs, workstations, printers, CCTV and accessories available at SR IT Solutions.",
-    path: "/catalog",
+    path: "/catalog/",
   });
   const { catalog, loading, error } = useCatalog();
   const [selectedCategory, setSelectedCategory] = useState("All");

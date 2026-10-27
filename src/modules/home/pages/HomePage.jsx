@@ -21,6 +21,7 @@ import { usePageMeta } from "../../../core/hooks/usePageMeta";
 
 function HomePage() {
   usePageMeta({
+    title: "Computer Shop in Arekere, Bengaluru",
     description:
       "Refurbished and used laptops, desktops, computer accessories and repair services in Arekere, Bengaluru. New and certified refurbished stock, tested before sale.",
     path: "/",
@@ -72,7 +73,7 @@ function HomePage() {
               className="reveal mt-8 flex flex-wrap gap-3"
               style={{ "--i": 3 }}
             >
-              <Link to="/catalog" className="btn-primary">
+              <Link to="/catalog/" className="btn-primary">
                 Browse the catalog
                 <ArrowRight size={17} />
               </Link>
@@ -99,7 +100,7 @@ function HomePage() {
                   {categories.map((category) => (
                     <li key={category.name}>
                       <Link
-                        to="/catalog"
+                        to="/catalog/"
                         className="chip min-h-9 border border-white/14 bg-white/6 px-3 text-white/80 hover:border-white/30 hover:text-white"
                       >
                         {category.name}

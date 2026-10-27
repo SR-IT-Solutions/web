@@ -6,6 +6,7 @@ function NotFoundPage() {
   usePageMeta({
     title: "Page not found",
     description: "That page doesn't exist. Browse the catalog or get in touch.",
+    noindex: true,
   });
 
   return (
@@ -20,7 +21,7 @@ function NotFoundPage() {
           <ArrowLeft size={16} />
           Back to home
         </Link>
-        <Link to="/catalog" className="btn-secondary">
+        <Link to="/catalog/" className="btn-secondary">
           Browse the catalog
         </Link>
       </div>
