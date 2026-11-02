@@ -26,6 +26,7 @@ export const siteData = {
       "863, BTS Layout Main Rd, Jai Maruthi Layout, Venugopal Reddy Layout, Arekere, Bengaluru, Karnataka 560076",
     instagramHref: "https://www.instagram.com/sritlaptops",
     instagramHandle: "@sritlaptops",
+    linkedinHref: "https://www.linkedin.com/company/sritsolutions",
     olxHref: "https://www.olx.in/profile/483067533",
     facebookHref: "https://www.facebook.com/marketplace/profile/100056373639598/",
     mapsHref:

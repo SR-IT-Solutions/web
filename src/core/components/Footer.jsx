@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { MapPin, MessageCircle, Phone, Tag } from "lucide-react";
+import { FaLinkedin } from "react-icons/fa";
 import { SiFacebook, SiInstagram } from "react-icons/si";
 import { siteData } from "../data/siteData";
 import logoImg from "../../assets/logo.png";
@@ -21,6 +22,11 @@ const channels = [
     href: siteData.brand.facebookHref,
     label: "Facebook Marketplace",
     icon: SiFacebook,
+  },
+  {
+    href: siteData.brand.linkedinHref,
+    label: "LinkedIn",
+    icon: FaLinkedin,
   },
   { href: siteData.brand.olxHref, label: "OLX", icon: Tag },
 ];
