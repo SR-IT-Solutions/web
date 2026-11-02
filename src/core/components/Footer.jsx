@@ -7,7 +7,10 @@ import logoImg from "../../assets/logo.png";
 
 const quickLinks = [
   { to: "/catalog/", label: "Product catalog" },
-  { to: "/services", label: "Services & repairs" },
+  { to: "/refurbished-laptops", label: "Refurbished laptops" },
+  { to: "/used-desktops", label: "Desktops & mini PCs" },
+  { to: "/laptop-repair", label: "Laptop & computer repair" },
+  { to: "/services", label: "All services" },
   { to: "/about", label: "About us" },
   { to: "/contact", label: "Contact & store location" },
 ];

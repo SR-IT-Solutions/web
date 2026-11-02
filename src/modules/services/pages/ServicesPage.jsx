@@ -1,5 +1,6 @@
 import { siteData } from "../../../core/data/siteData";
-import { MessageCircle } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 import desktopsImg from "../../../assets/services/desktops.jpg";
 import accessoriesImg from "../../../assets/services/accessories.jpg";
 import repairsImg from "../../../assets/services/repairs.jpg";
@@ -10,21 +11,33 @@ const serviceCards = [
   {
     image: desktopsImg,
     title: "Laptops and desktops",
+    alt: "Laptop connected to a monitor on a desk",
+    to: "/refurbished-laptops",
+    linkLabel: "See laptops in stock",
     text: "New, used, and refurbished machines for home, office, and everyday work. Each one is tested before it goes on the shelf.",
   },
   {
     image: accessoriesImg,
     title: "Accessories and peripherals",
+    alt: "Keyboard, mouse and headphones",
+    to: "/catalog/",
+    linkLabel: "Browse the catalog",
     text: "Monitors, keyboards, mice, printers, CCTV equipment, and the parts that finish a setup.",
   },
   {
     image: repairsImg,
     title: "Repairs and diagnostics",
+    alt: "Technician working inside an open laptop",
+    to: "/laptop-repair",
+    linkLabel: "Laptop and computer repair",
     text: "Troubleshooting and repair for laptops, desktops, and related equipment. Bring it in and we'll tell you what's wrong.",
   },
   {
     image: businessImg,
     title: "Business equipment",
+    alt: "Office laser printer",
+    to: "/used-desktops",
+    linkLabel: "Desktops and mini PCs",
     text: "Printers, workstations, and hardware for shops, offices, and local businesses.",
   },
 ];
@@ -45,12 +58,12 @@ function ServicesPage() {
       </p>
 
       <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {serviceCards.map(({ image, title, text }) => (
+        {serviceCards.map(({ image, alt, title, text, to, linkLabel }) => (
           <article key={title} className="card-interactive flex flex-col overflow-hidden">
             <div className="sheen aspect-16/10 overflow-hidden bg-paper">
               <img
                 src={image}
-                alt=""
+                alt={alt}
                 className="zoom h-full w-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -60,6 +73,13 @@ function ServicesPage() {
               {}
               <h2 className="t-card min-h-[2.6em] text-ink">{title}</h2>
               <p className="t-body mt-1 text-pretty text-[0.9375rem]">{text}</p>
+              <Link
+                to={to}
+                className="mt-auto inline-flex min-h-11 items-center gap-1.5 pt-3 text-[15px] font-medium text-signal-600 transition hover:text-signal-700"
+              >
+                {linkLabel}
+                <ArrowRight size={15} />
+              </Link>
             </div>
           </article>
         ))}

@@ -1,4 +1,4 @@
-const faqs = [
+const defaultFaqs = [
   {
     question: "Do you sell used and refurbished computers?",
     answer:
@@ -31,7 +31,7 @@ const faqs = [
   },
 ];
 
-function FaqSection() {
+function FaqSection({ faqs = defaultFaqs, title = "Questions we get asked" }) {
   const faqColumns = [
     faqs.filter((_, index) => index % 2 === 0),
     faqs.filter((_, index) => index % 2 === 1),
@@ -60,7 +60,7 @@ function FaqSection() {
       />
       <div className="rule-heading">
         <h2 id="faq-heading" className="t-section text-ink">
-          Questions we get asked
+          {title}
         </h2>
       </div>
       <div className="mt-8 grid items-start gap-4 md:grid-cols-2">

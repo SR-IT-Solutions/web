@@ -16,6 +16,9 @@ const SSR_ENTRY = resolve(ROOT, "dist-ssr/entry-server.js");
 const STATIC_ROUTES = [
   { path: "/", file: "index.html", changefreq: "weekly", priority: "1.0" },
   { path: "/services", file: "services.html", changefreq: "monthly", priority: "0.8" },
+  { path: "/laptop-repair", file: "laptop-repair.html", changefreq: "monthly", priority: "0.8" },
+  { path: "/refurbished-laptops", file: "refurbished-laptops.html", changefreq: "daily", priority: "0.9" },
+  { path: "/used-desktops", file: "used-desktops.html", changefreq: "daily", priority: "0.8" },
   { path: "/catalog/", file: "catalog/index.html", changefreq: "daily", priority: "0.9" },
   { path: "/about", file: "about.html", changefreq: "yearly", priority: "0.5" },
   { path: "/contact", file: "contact.html", changefreq: "yearly", priority: "0.6" },
@@ -76,7 +79,7 @@ function productSchemas(product, url) {
         priceCurrency: "INR",
         price: product.priceValue,
         availability: "https://schema.org/InStock",
-        seller: { "@type": "LocalBusiness", name: "SR IT Solutions", url: `${SITE_URL}/` },
+        seller: { "@type": "ComputerStore", "@id": `${SITE_URL}/#store`, name: "SR IT Solutions", url: `${SITE_URL}/` },
       },
     });
   }
